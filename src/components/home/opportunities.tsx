@@ -32,10 +32,10 @@ function JobDetails({ job }: { job: Job }) {
         <Sparkles aria-hidden="true" className="size-5.5 text-interaction" />
         精准匹配
       </h3>
-      <p className="text-secondary-foreground mt-2 text-sm leading-6">每个岗位均附带可追溯的匹配逻辑，拒绝盲投。</p>
+      <p className="text-secondary-foreground mt-2 text-xs leading-6">每个岗位均附带可追溯的匹配逻辑，拒绝盲投。</p>
     </div>
     <div className="flex-1 p-5 max-[850px]:p-4">
-      <h3 className="text-sm font-medium mb-1">{job.title}</h3>
+      <h3 className="text-base font-medium mb-2">{job.title}</h3>
       <dl className="m-0">
         <DetailRow icon={<GraduationCap aria-hidden="true" />} label="学历要求">{job.degree}</DetailRow>
         <DetailRow icon={<BookOpen aria-hidden="true" />} label="专业要求">{job.majors.join('、')}</DetailRow>
