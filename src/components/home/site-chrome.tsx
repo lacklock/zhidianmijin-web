@@ -2,6 +2,7 @@ import type { ReactNode } from 'react'
 import { Bell, UserRound, ChevronDown } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import integratedLogo from '@/assets/Integrated_logo.webp'
+import siteTitleLogo from '@/assets/site-title.png'
 import miniprogramCode from '@/assets/miniprogram.jpg'
 import {
   HoverCard,
@@ -47,9 +48,9 @@ export function SiteHeader() {
     <header className="sticky top-0 z-100 min-w-170 h-18 border-b border-border bg-[rgb(255_255_255/96%)] backdrop-blur-[12px]">
       <div className="w-full max-w-[1080px] px-6 mx-auto max-[850px]:px-5 h-full flex items-center gap-8 [&_nav]:flex [&_nav]:items-center [&_nav]:gap-1 max-[850px]:gap-4 max-[850px]:[&_nav]:gap-0">
         <img
-          src={integratedLogo}
+          src={siteTitleLogo}
           alt="职点迷津"
-          className="h-9 w-auto max-[850px]:h-8"
+          className="h-8 w-auto max-[850px]:h-8"
         />
         <nav aria-label="主导航">
           <Button
