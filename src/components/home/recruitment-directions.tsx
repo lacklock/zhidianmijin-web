@@ -114,7 +114,7 @@ export function RecruitmentDirections() {
   return (
     <nav
       aria-label="招聘方向"
-      className="mt-8 mb-6 grid grid-cols-5 gap-3 max-[850px]:gap-2"
+      className="mt-8 mb-1 grid grid-cols-5 gap-3 max-[850px]:gap-2"
     >
       {links.map(({ label, value, icon: Icon, href }) => (
         <a
