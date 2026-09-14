@@ -1,4 +1,5 @@
-import { useState } from 'react'
+import { useRef, useState, type ReactNode } from 'react'
+import { cn } from 'cn'
 import {
   Building2,
   GraduationCap,
@@ -6,18 +7,52 @@ import {
   Landmark,
   Ellipsis,
   Search,
+  ChevronDown,
+  X,
+  RotateCcw,
 } from 'lucide-react'
 import { PlatformStatistics } from '@/components/platform-statistics'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
+import {
+  DropdownMenu,
+  DropdownMenuTrigger,
+  DropdownMenuContent,
+  DropdownMenuGroup,
+  DropdownMenuCheckboxItem,
+  DropdownMenuRadioGroup,
+  DropdownMenuRadioItem,
+} from '@/components/ui/dropdown-menu'
 
 const directions = [
-  { label: '央国企岗位', icon: Building2 },
-  { label: '校园招聘', icon: GraduationCap },
-  { label: '军队文职', icon: ShieldCheck },
-  { label: '公务员', icon: Landmark },
-  { label: '更多方向', icon: Ellipsis },
-]
+  { label: '央国企岗位', value: 'state-owned', icon: Building2 },
+  { label: '校园招聘', value: 'campus', icon: GraduationCap },
+  { label: '军队文职', value: 'military-civilian', icon: ShieldCheck },
+  { label: '公务员', value: 'civil-service', icon: Landmark },
+] as const
+
+type RecruitmentDirection = (typeof directions)[number]['value']
+
+export type JobSearchParams = {
+  keyword: string
+  city: string
+  education: string[]
+  major: string
+  organizationTypes: string[]
+  recruitmentType: string
+  direction?: RecruitmentDirection
+}
+
+type Filters = Omit<JobSearchParams, 'keyword' | 'direction'>
+type FilterKey = keyof Filters
+
+const defaultFilters: Filters = {
+  city: '',
+  education: [],
+  major: '',
+  organizationTypes: [],
+  recruitmentType: '',
+}
 
 const hotCities = [
   '北京',
@@ -52,17 +87,96 @@ const hotMajors = [
   '能源动力类',
 ]
 
-function TagRow({ label, items }: { label: string; items: string[] }) {
+const filterDefinitions = [
+  {
+    key: 'city',
+    label: '地区',
+    defaultLabel: '全国',
+    options: hotCities,
+    multiple: false,
+  },
+  {
+    key: 'education',
+    label: '学历',
+    defaultLabel: '不限',
+    options: ['大专', '本科', '硕士', '博士'],
+    multiple: true,
+  },
+  {
+    key: 'major',
+    label: '专业',
+    defaultLabel: '不限专业',
+    options: hotMajors,
+    multiple: false,
+  },
+  {
+    key: 'organizationTypes',
+    label: '单位性质',
+    defaultLabel: '不限',
+    options: [
+      '央国企',
+      '民营企业',
+      '外资企业',
+      '合资企业',
+      '事业单位',
+      '机关单位',
+      '社会组织',
+      '其他',
+    ],
+    multiple: true,
+  },
+  {
+    key: 'recruitmentType',
+    label: '招聘类型',
+    defaultLabel: '不限类型',
+    options: ['校园招聘', '社会招聘', '实习岗位', '兼职岗位', '其他'],
+    multiple: false,
+  },
+] as const
+
+function Reveal({ open, children }: { open: boolean; children: ReactNode }) {
+  return (
+    <div
+      inert={!open}
+      aria-hidden={!open}
+      className={cn(
+        'grid transition-[grid-template-rows,opacity] duration-200 ease-out motion-reduce:transition-none',
+        open ? 'grid-rows-[1fr] opacity-100' : 'grid-rows-[0fr] opacity-0',
+      )}
+    >
+      <div className="min-h-0 overflow-hidden">{children}</div>
+    </div>
+  )
+}
+
+function TagRow({
+  label,
+  items,
+  selected,
+  onSelect,
+}: {
+  label: string
+  items: string[]
+  selected: string
+  onSelect: (value: string) => void
+}) {
   return (
     <div className="flex min-h-9 flex-wrap items-center gap-x-5">
-      <span className="whitespace-nowrap text-[12px] text-muted-foreground">
+      <span className="whitespace-nowrap text-xs text-muted-foreground">
         {label}
       </span>
       {items.map((item) => (
         <button
           type="button"
           key={item}
-          className="whitespace-nowrap p-[4px_0] text-secondary-foreground hover:text-interaction"
+          aria-pressed={selected === item}
+          onClick={() => onSelect(item)}
+          className={cn(
+            'rounded-sm py-1 whitespace-nowrap hover:text-interaction focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring',
+            selected === item
+              ? 'font-medium text-interaction'
+              : 'text-secondary-foreground',
+          )}
         >
           {item}
         </button>
@@ -71,48 +185,267 @@ function TagRow({ label, items }: { label: string; items: string[] }) {
   )
 }
 
-export function SearchPanel() {
+export function SearchPanel({
+  onSearch,
+}: {
+  onSearch?: (params: JobSearchParams) => void
+}) {
   const [query, setQuery] = useState('')
+  const [filters, setFilters] = useState<Filters>(defaultFilters)
+  const [hovered, setHovered] = useState(false)
+  const [focused, setFocused] = useState(false)
+  const [openFilter, setOpenFilter] = useState<FilterKey | null>(null)
+  const inputRef = useRef<HTMLInputElement>(null)
+
+  const selectedConditions = filterDefinitions.flatMap(({ key, label }) => {
+    const value = filters[key]
+    const values = Array.isArray(value) ? value : value ? [value] : []
+    return values.map((item) => ({ key, label, value: item }))
+  })
+  const hasFilters = selectedConditions.length > 0
+  const active = hovered || focused || openFilter !== null || hasFilters
+
+  function selectFilter(key: FilterKey, value: string) {
+    setFilters((current) => {
+      const previous = current[key]
+      const next = Array.isArray(previous)
+        ? value === ''
+          ? []
+          : previous.includes(value)
+            ? previous.filter((item) => item !== value)
+            : [...previous, value]
+        : value
+      return { ...current, [key]: next }
+    })
+  }
+
+  function removeCondition(key: FilterKey, value: string) {
+    // 将焦点移到稳定控件，避免被移除的标签留下失效焦点。
+    inputRef.current?.focus({ preventScroll: true })
+    setFilters((current) => ({
+      ...current,
+      [key]: Array.isArray(current[key])
+        ? current[key].filter((item) => item !== value)
+        : '',
+    }))
+  }
+
+  function submitSearch(direction?: RecruitmentDirection) {
+    const params: JobSearchParams = {
+      keyword: query.trim(),
+      ...filters,
+      education: [...filters.education],
+      organizationTypes: [...filters.organizationTypes],
+      ...(direction ? { direction } : {}),
+    }
+    // jobs 路由接入点：未来在调用方合并方向预设并序列化路由参数。
+    onSearch?.(params)
+  }
+
   return (
     <>
       <section
-        className="p-6 border border-border rounded-lg bg-white shadow-[0_12px_32px_-12px_rgb(50_80_110/18%),0_2px_8px_rgb(50_80_110/3%)] max-[850px]:p-5"
         aria-label="岗位搜索"
+        data-state={active ? 'active' : 'idle'}
+        onPointerEnter={(event) => {
+          if (event.pointerType === 'mouse') setHovered(true)
+        }}
+        onPointerLeave={() => setHovered(false)}
+        onFocusCapture={() => setFocused(true)}
+        onBlurCapture={(event) => {
+          setFocused(event.currentTarget.contains(event.relatedTarget))
+        }}
+        className="rounded-lg border border-border bg-white p-6 shadow-[0_12px_32px_-12px_rgb(50_80_110/18%),0_2px_8px_rgb(50_80_110/3%)] max-[850px]:p-5"
       >
-        <div className="flex items-center gap-3 min-h-16 p-[7px_8px_7px_18px] border border-border rounded-sm bg-background focus-within:outline-2 focus-within:outline-ring focus-within:outline-offset-0.75">
-          <Search
-            aria-hidden="true"
-            className="size-6 stroke-[1.7] text-interaction"
-          />
-          <Input
-            id="job-search"
-            aria-label="搜索岗位或单位"
-            placeholder="例如：算法工程师、国家电网..."
-            value={query}
-            onChange={(event) => setQuery(event.target.value)}
-            className="h-11 flex-1 rounded-0 border-0 px-0 text-base shadow-none md:text-base focus-visible:border-0 focus-visible:ring-0"
-          />
-          <Button type="button" size="lg" className="h-11.5 px-7">
-            找岗位
-          </Button>
-        </div>
+        <form
+          onSubmit={(event) => {
+            event.preventDefault()
+            submitSearch()
+          }}
+        >
+          <div className="flex min-h-16 items-center gap-3 rounded-sm border border-border bg-background p-[7px_8px_7px_18px] focus-within:outline-2 focus-within:outline-ring focus-within:outline-offset-0.75">
+            <Search
+              aria-hidden="true"
+              className="size-6 shrink-0 stroke-[1.7] text-interaction"
+            />
+            <Input
+              ref={inputRef}
+              id="job-search"
+              aria-label="搜索岗位或单位"
+              placeholder="例如：算法工程师、国家电网..."
+              value={query}
+              onChange={(event) => setQuery(event.target.value)}
+              className="h-11 min-w-0 flex-1 rounded-none border-0 px-0 text-base shadow-none focus-visible:border-0 focus-visible:ring-0 md:text-base"
+            />
+            <Button type="submit" size="lg" className="h-11.5 px-7 max-sm:px-3">
+              找岗位
+            </Button>
+          </div>
+        </form>
+        <Reveal open={active}>
+          <div className="grid grid-cols-5 gap-3 pt-4 pb-1 max-[850px]:grid-cols-3 max-sm:grid-cols-2">
+            {filterDefinitions.map(
+              ({ key, label, defaultLabel, options, multiple }) => {
+                const value = filters[key]
+                const selected = Array.isArray(value)
+                  ? value
+                  : value
+                    ? [value]
+                    : []
+                const summary = selected.length
+                  ? selected.join('、')
+                  : defaultLabel
+                return (
+                  <DropdownMenu
+                    key={key}
+                    modal={false}
+                    open={openFilter === key}
+                    onOpenChange={(open) =>
+                      setOpenFilter((current) =>
+                        open ? key : current === key ? null : current,
+                      )
+                    }
+                  >
+                    <DropdownMenuTrigger asChild>
+                      <Button
+                        variant="outline"
+                        type="button"
+                        title={`${label}：${summary}`}
+                        aria-label={`${label}：${summary}`}
+                        className="h-11 w-full min-w-0 justify-between px-3"
+                      >
+                        <span className="shrink-0">{label}</span>
+                        <span className="truncate">{summary}</span>
+                        <ChevronDown
+                          data-icon="inline-end"
+                          aria-hidden="true"
+                        />
+                      </Button>
+                    </DropdownMenuTrigger>
+                    <DropdownMenuContent
+                      aria-label={label}
+                      className="min-w-44"
+                    >
+                      <DropdownMenuGroup>
+                        {multiple ? (
+                          <>
+                            <DropdownMenuCheckboxItem
+                              checked={selected.length === 0}
+                              onSelect={(event) => event.preventDefault()}
+                              onCheckedChange={() => selectFilter(key, '')}
+                              className="min-h-9"
+                            >
+                              {defaultLabel}
+                            </DropdownMenuCheckboxItem>
+                            {options.map((option) => (
+                              <DropdownMenuCheckboxItem
+                                key={option}
+                                checked={selected.includes(option)}
+                                onSelect={(event) => event.preventDefault()}
+                                onCheckedChange={() =>
+                                  selectFilter(key, option)
+                                }
+                                className="min-h-9"
+                              >
+                                {option}
+                              </DropdownMenuCheckboxItem>
+                            ))}
+                          </>
+                        ) : (
+                          <DropdownMenuRadioGroup
+                            value={selected[0] ?? ''}
+                            onValueChange={(next) => selectFilter(key, next)}
+                          >
+                            <DropdownMenuRadioItem value="" className="min-h-9">
+                              {defaultLabel}
+                            </DropdownMenuRadioItem>
+                            {options.map((option) => (
+                              <DropdownMenuRadioItem
+                                key={option}
+                                value={option}
+                                className="min-h-9"
+                              >
+                                {option}
+                              </DropdownMenuRadioItem>
+                            ))}
+                          </DropdownMenuRadioGroup>
+                        )}
+                      </DropdownMenuGroup>
+                    </DropdownMenuContent>
+                  </DropdownMenu>
+                )
+              },
+            )}
+          </div>
+        </Reveal>
         <div className="mt-3 mb-4 flex flex-col">
-          <TagRow label="热门城市" items={hotCities} />
-          <TagRow label="热门专业" items={hotMajors} />
+          <Reveal open={active}>
+            <TagRow
+              label="热门城市"
+              items={hotCities}
+              selected={filters.city}
+              onSelect={(value) => selectFilter('city', value)}
+            />
+          </Reveal>
+          <TagRow
+            label="热门专业"
+            items={hotMajors}
+            selected={filters.major}
+            onSelect={(value) => selectFilter('major', value)}
+          />
         </div>
-        <div className="grid grid-cols-5 gap-3 max-[850px]:gap-2">
-          {directions.map(({ label, icon: Icon }) => (
+        <div className="grid grid-cols-5 gap-3 max-[850px]:gap-2 max-sm:grid-cols-2">
+          {directions.map(({ label, value, icon: Icon }) => (
             <Button
               variant="outline"
               type="button"
               className="h-13 px-2"
-              key={label}
+              key={value}
+              onClick={() => submitSearch(value)}
             >
-              <Icon data-icon="inline-start" />
+              <Icon data-icon="inline-start" aria-hidden="true" />
               {label}
             </Button>
           ))}
+          <Button variant="outline" type="button" className="h-13 px-2">
+            <Ellipsis data-icon="inline-start" aria-hidden="true" />
+            更多方向
+          </Button>
         </div>
+        <Reveal open={hasFilters}>
+          <div
+            className="mt-4 flex flex-wrap items-center gap-3 border-t border-border pt-4"
+            aria-label="已选筛选条件"
+          >
+            <span className="text-xs text-muted-foreground">已选条件</span>
+            {selectedConditions.map(({ key, label, value }) => (
+              <Button
+                key={`${key}-${value}`}
+                type="button"
+                variant="secondary"
+                size="sm"
+                aria-label={`移除${label}：${value}`}
+                onClick={() => removeCondition(key, value)}
+              >
+                {value}
+                <X data-icon="inline-end" aria-hidden="true" />
+              </Button>
+            ))}
+            <Button
+              type="button"
+              variant="ghost"
+              size="sm"
+              className="ml-auto"
+              onClick={() => {
+                inputRef.current?.focus({ preventScroll: true })
+                setFilters(defaultFilters)
+              }}
+            >
+              <RotateCcw data-icon="inline-start" aria-hidden="true" />
+              清空筛选
+            </Button>
+          </div>
+        </Reveal>
       </section>
       <PlatformStatistics />
     </>
