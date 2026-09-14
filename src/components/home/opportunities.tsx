@@ -13,9 +13,12 @@ import {
   type LucideIcon,
 } from 'lucide-react'
 import { Button } from '@/components/ui/button'
+import { RotatingText } from '@/components/ui/rotating-text'
 import data from '@/data/homepage.json'
 
 type Job = (typeof data.jobs)[number]
+
+const jobTitles = data.jobs.map((job) => job.title)
 
 function SectionHeading({
   id,
@@ -116,7 +119,25 @@ function JobDetails({ job }: { job: Job }) {
         </p>
       </div>
       <div className="flex-1 p-5 max-[850px]:p-4">
-        <h3 className="text-base font-medium mb-2">{job.title}</h3>
+        <h3 className="mb-2 text-base font-medium" aria-label={job.title}>
+          <RotatingText
+            texts={jobTitles}
+            currentIndex={Math.max(
+              0,
+              data.jobs.findIndex((item) => item.id === job.id),
+            )}
+            auto={false}
+            animatePresenceMode="wait"
+            staggerFrom="first"
+            initial={{ y: '100%' }}
+            animate={{ y: 0 }}
+            exit={{ y: '-120%' }}
+            staggerDuration={0.018}
+            splitLevelClassName="overflow-hidden"
+            transition={{ type: 'spring', damping: 28, stiffness: 520 }}
+            aria-hidden="true"
+          />
+        </h3>
         <dl className="m-0">
           <DetailRow icon={GraduationCap} label="学历要求">
             {job.degree}
