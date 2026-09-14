@@ -12,6 +12,22 @@ const directions = [
   { label: '更多方向', icon: Ellipsis },
 ]
 
+const hotCities = ['北京', '上海', '广州', '深圳', '杭州', '成都', '武汉', '南京', '西安', '重庆', '天津', '苏州', '青岛', '郑州', '长沙', '合肥']
+const hotMajors = ['计算机类', '电子信息类', '电气类', '机械类', '自动化类', '金融学类', '会计学', '法学类', '土木类', '材料类', '通信工程', '能源动力类']
+
+function TagRow({ label, items }: { label: string; items: string[] }) {
+  return (
+    <div className="flex min-h-9 flex-wrap items-center gap-x-5">
+      <span className="whitespace-nowrap text-[12px] text-muted-foreground">{label}</span>
+      {items.map((item) => (
+        <button type="button" key={item} className="whitespace-nowrap p-[4px_0] text-secondary-foreground hover:text-interaction">
+          {item}
+        </button>
+      ))}
+    </div>
+  )
+}
+
 export function SearchPanel() {
   const [query, setQuery] = useState('')
   return (
@@ -22,9 +38,9 @@ export function SearchPanel() {
           <Input id="job-search" aria-label="搜索岗位或单位" placeholder="例如：算法工程师、国家电网..." value={query} onChange={(event) => setQuery(event.target.value)} />
           <Button type="button" size="lg" className="h-11.5 px-7">找岗位</Button>
         </div>
-        <div className="flex flex-col gap-0 mt-3 mb-4 [&_>_div]:flex [&_>_div]:flex-wrap [&_>_div]:items-center [&_>_div]:gap-x-5 gap-y-0 [&_>_div]:min-h-9 [&_>_div_>_*]:whitespace-nowrap [&_button]:p-[4px_0] [&_button]:text-secondary-foreground [&_button:hover]:text-interaction">
-          <div><span className="text-muted-foreground text-sm">热门城市</span>{['北京', '上海', '广州', '深圳', '杭州', '成都', '武汉', '南京', '西安', '重庆', '天津', '苏州', '青岛', '郑州', '长沙', '合肥'].map((city) => <button type="button" key={city}>{city}</button>)}</div>
-          <div><span className="text-muted-foreground text-sm">热门专业</span>{['计算机类', '电子信息类', '电气类', '机械类', '自动化类', '金融学类', '会计学', '法学类', '土木类', '材料类', '通信工程', '能源动力类'].map((major) => <button type="button" key={major}>{major}</button>)}</div>
+        <div className="mt-3 mb-4 flex flex-col">
+          <TagRow label="热门城市" items={hotCities} />
+          <TagRow label="热门专业" items={hotMajors} />
         </div>
         <div className="grid grid-cols-5 gap-3 max-[850px]:gap-2">
           {directions.map(({ label, icon: Icon }) => <Button variant="outline" type="button" className="h-13 px-2" key={label}><Icon data-icon="inline-start" />{label}</Button>)}
