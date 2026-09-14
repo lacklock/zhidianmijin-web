@@ -172,9 +172,9 @@ function TagRow({
           aria-pressed={selected === item}
           onClick={() => onSelect(item)}
           className={cn(
-            'rounded-xl px-2 py-0.5 whitespace-nowrap transition-colors duration-160 hover:text-interaction focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring',
+            'rounded-full px-2.5 py-0.5 whitespace-nowrap transition-colors duration-160 hover:text-primary focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring',
             selected === item
-              ? 'bg-accent font-medium text-accent-foreground'
+              ? 'bg-primary-wash font-medium text-primary'
               : 'text-secondary-foreground',
           )}
         >
@@ -260,7 +260,7 @@ export function SearchPanel({
         onBlurCapture={(event) => {
           setFocused(event.currentTarget.contains(event.relatedTarget))
         }}
-        className="rounded-lg mb-4 border border-border bg-white shadow-[0_12px_32px_-12px_rgb(50_80_110/18%),0_2px_8px_rgb(50_80_110/3%)]"
+        className="rounded-lg mb-4 border border-border bg-card shadow-overlay"
       >
         <div className="p-6 max-[850px]:p-5">
           <form
@@ -269,10 +269,10 @@ export function SearchPanel({
               submitSearch()
             }}
           >
-            <div className="flex min-h-16 items-center gap-3 rounded-sm border border-border bg-background p-[7px_8px_7px_18px] focus-within:outline-2 focus-within:outline-ring focus-within:outline-offset-0.75">
+            <div className="flex min-h-16 items-center gap-3 rounded-sm border border-input bg-background p-[7px_8px_7px_18px] focus-within:outline-2 focus-within:outline-ring focus-within:outline-offset-0.75">
               <Search
                 aria-hidden="true"
-                className="size-6 shrink-0 stroke-[1.7] text-interaction"
+                className="size-6 shrink-0 stroke-[1.7] text-primary"
               />
               <Input
                 ref={inputRef}
@@ -410,7 +410,7 @@ export function SearchPanel({
                             className={cn(
                               'truncate text-base font-medium',
                               selected.length
-                                ? 'text-interaction'
+                                ? 'text-primary'
                                 : 'text-foreground',
                             )}
                           >

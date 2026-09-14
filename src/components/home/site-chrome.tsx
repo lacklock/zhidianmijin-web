@@ -34,7 +34,7 @@ function HoverMenu({
       </HoverCardTrigger>
       <HoverCardContent
         align={account ? 'end' : 'start'}
-        className="w-40 p-1.5 rounded-lg shadow-[0_12px_28px_rgb(10_37_64/12%)]"
+        className="w-40 p-1.5"
         sideOffset={8}
       >
         {children}
@@ -46,7 +46,7 @@ function HoverMenu({
 export function SiteHeader() {
   return (
     <header className="sticky top-0 z-100 min-w-170 h-16 border-b border-border bg-[rgb(255_255_255/96%)] backdrop-blur-md">
-      <div className="w-full max-w-270 px-6 mx-auto max-[850px]:px-5 h-full flex items-center gap-8 [&_nav]:flex [&_nav]:items-center [&_nav]:gap-1 max-[850px]:gap-4 max-[850px]:[&_nav]:gap-0">
+      <div className="page-shell h-full flex items-center gap-8 [&_nav]:flex [&_nav]:items-center [&_nav]:gap-1 max-[850px]:gap-4 max-[850px]:[&_nav]:gap-0">
         <img
           src={siteTitleLogo}
           alt="职点迷津"
@@ -119,7 +119,7 @@ export function SiteHeader() {
 export function SiteFooter() {
   return (
     <footer className="bg-secondary border-t border-border pt-6 pb-4">
-      <div className="w-full max-w-270 px-6 mx-auto max-[850px]:px-5">
+      <div className="page-shell">
         <div className="grid grid-cols-[3fr_1fr_1fr] gap-8 [&_p]:mt-2 [&_p]:text-xs [&_p]:text-secondary-foreground max-[850px]:gap-5 max-[850px]:grid-cols-[2.6fr_1fr_1fr]">
           <div className="flex items-center gap-10 max-[850px]:gap-5">
             <div>
@@ -165,7 +165,7 @@ export function SiteFooter() {
               </HoverCardContent>
             </HoverCard>
           </div>
-          <div className="flex flex-col items-start [&_h2]:text-sm [&_h2]:font-medium [&_h2]:mb-2 [&_button]:text-muted-foreground [&_button]:text-xs [&_button]:py-0.5 [&_button:hover]:text-interaction">
+          <div className="flex flex-col items-start [&_h2]:text-sm [&_h2]:font-medium [&_h2]:mb-2 [&_button]:text-muted-foreground [&_button]:text-xs [&_button]:py-0.5 [&_button:hover]:text-primary">
             <h2>更多服务</h2>
             {['课程', '招聘日历', '企业库'].map((label) => (
               <button type="button" key={label}>
@@ -173,7 +173,7 @@ export function SiteFooter() {
               </button>
             ))}
           </div>
-          <div className="flex flex-col items-start [&_h2]:text-sm [&_h2]:font-medium [&_h2]:mb-2 [&_button]:text-muted-foreground [&_button]:text-xs [&_button]:py-0.5 [&_button:hover]:text-interaction">
+          <div className="flex flex-col items-start [&_h2]:text-sm [&_h2]:font-medium [&_h2]:mb-2 [&_button]:text-muted-foreground [&_button]:text-xs [&_button]:py-0.5 [&_button:hover]:text-primary">
             <h2>协议与支持</h2>
             {['数据与隐私', '隐私政策', '用户协议'].map((label) => (
               <button type="button" key={label}>

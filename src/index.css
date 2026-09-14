@@ -2,27 +2,61 @@
 @import 'tw-animate-css';
 @import 'shadcn/tailwind.css';
 
+/* 站点仅有浅色主题；改写 dark 变体为类选择器，避免 shadcn 组件的 dark: 样式
+   在系统深色模式下生效。 */
+@custom-variant dark (&:where(.dark, .dark *));
+
 :root {
+  /* 页面外框：1080px 含左右留白，内容列 1032px */
+  --page-max: 1080px;
+  --page-gutter: 24px;
+
+  /* 主色 公文靛 */
+  --primary: #1b3fa0;
+  --primary-foreground: #fff;
+  --primary-hover: #16308a;
+  --primary-active: #122873;
+  --primary-wash: #eceffa;
+  --primary-wash-strong: #dde3f5;
+
+  /* 次级色 石青：标注岗位条件与平台数据，不用于操作 */
+  --support: #0e7490;
+  --support-foreground: #fff;
+  --support-wash: #e6f2f5;
+
+  /* 文字与背景 */
   --background: #fff;
-  --foreground: #0a2540;
+  --foreground: #101828;
   --card: #fff;
-  --card-foreground: #0a2540;
+  --card-foreground: #101828;
   --popover: #fff;
-  --popover-foreground: #0a2540;
-  --primary: #4597d2;
-  --primary-foreground: #0a2540;
-  --secondary: #f6f9fc;
-  --secondary-foreground: #425466;
-  --muted: #f8fafd;
-  --muted-foreground: #64748d;
-  --accent: #edf5fc;
-  --accent-foreground: #2879b3;
-  --border: #e5edf5;
-  --input: #e5edf5;
-  --ring: #2879b3;
+  --popover-foreground: #101828;
+  --secondary: #f5f6fa;
+  --secondary-foreground: #475467;
+  --muted: #fafafd;
+  --muted-foreground: #667085;
+  --accent: #eceffa;
+  --accent-foreground: #1b3fa0;
+
+  /* 描边：border 为分隔线，input 为表单控件边界（≥3:1） */
+  --border: #e1e4ed;
+  --border-strong: #cbd1df;
+  --input: #8a94a6;
+
+  --ring: #1b3fa0;
   --destructive: #b42318;
-  --radius: 8px;
-  --interaction: #2879b3;
+  --success: #067647;
+
+  /* 圆角 6 / 10 / 16 */
+  --radius: 10px;
+
+  /* 高度：三级，随离页面的距离递增；1px 描边的卡片默认不叠阴影 */
+  --elevation-raised: 0 1px 2px rgb(16 24 40 / 6%);
+  --elevation-overlay:
+    0 8px 24px -6px rgb(16 24 40 / 12%), 0 2px 6px -2px rgb(16 24 40 / 6%);
+  --elevation-modal:
+    0 24px 48px -12px rgb(16 24 40 / 18%), 0 4px 10px -4px rgb(16 24 40 / 8%);
+
   --body-font:
     'PingFang SC', 'Microsoft YaHei', 'Noto Sans SC', 'Source Han Sans SC',
     sans-serif;
@@ -35,10 +69,14 @@
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
+@media (max-width: 850px) {
+  :root {
+    --page-gutter: 20px;
+  }
+}
 @theme inline {
   --font-sans: var(--body-font);
   --font-heading: var(--body-font);
-  --color-interaction: var(--interaction);
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --color-card: var(--card);
@@ -47,6 +85,13 @@
   --color-popover-foreground: var(--popover-foreground);
   --color-primary: var(--primary);
   --color-primary-foreground: var(--primary-foreground);
+  --color-primary-hover: var(--primary-hover);
+  --color-primary-active: var(--primary-active);
+  --color-primary-wash: var(--primary-wash);
+  --color-primary-wash-strong: var(--primary-wash-strong);
+  --color-support: var(--support);
+  --color-support-foreground: var(--support-foreground);
+  --color-support-wash: var(--support-wash);
   --color-secondary: var(--secondary);
   --color-secondary-foreground: var(--secondary-foreground);
   --color-muted: var(--muted);
@@ -54,13 +99,31 @@
   --color-accent: var(--accent);
   --color-accent-foreground: var(--accent-foreground);
   --color-border: var(--border);
+  --color-border-strong: var(--border-strong);
   --color-input: var(--input);
   --color-ring: var(--ring);
   --color-destructive: var(--destructive);
-  --radius-sm: calc(var(--radius) - 4px);
-  --radius-md: calc(var(--radius) - 2px);
-  --radius-lg: var(--radius);
-  --radius-xl: calc(var(--radius) + 4px);
+  --color-success: var(--success);
+
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 16px;
+  --radius-xl: 16px;
+
+  --shadow-raised: var(--elevation-raised);
+  --shadow-overlay: var(--elevation-overlay);
+  --shadow-modal: var(--elevation-modal);
+  --shadow-sm: var(--elevation-raised);
+  --shadow-md: var(--elevation-overlay);
+  --shadow-lg: var(--elevation-modal);
+}
+@layer components {
+  .page-shell {
+    width: 100%;
+    max-width: var(--page-max);
+    margin-inline: auto;
+    padding-inline: var(--page-gutter);
+  }
 }
 @layer base {
   * {
@@ -80,15 +143,20 @@
   button {
     cursor: pointer;
   }
-  button:focus-visible {
+  /* shadcn 组件（带 data-slot）自带 ring 焦点态，此处只兜底原生元素，避免双重焦点环 */
+  :where(a, button, [tabindex]):not([data-slot]):focus-visible {
     outline: 2px solid var(--ring);
-    outline-offset: 3px;
+    outline-offset: 2px;
   }
   h1,
   h2,
   h3,
   p {
     margin: 0;
+  }
+  time,
+  [data-numeric] {
+    font-variant-numeric: tabular-nums;
   }
   svg {
     flex-shrink: 0;

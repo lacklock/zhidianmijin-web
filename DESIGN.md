@@ -1,481 +1,260 @@
 ---
-name: 指点迷津
+name: 职点迷津
+page-width: 1080px
 colors:
-  primary: "#4597D2"
-  secondary: "#425466"
-  surface: "#FFFFFF"
-  on-surface: "#0A2540"
+  primary: '#1B3FA0'
+  support: '#0E7490'
+  surface: '#FFFFFF'
+  on-surface: '#101828'
 typography:
-  body-md:
+  body:
     fontFamily: '"PingFang SC", "Microsoft YaHei", "Noto Sans SC", "Source Han Sans SC", sans-serif'
     fontSize: 14px
     fontWeight: 400
     lineHeight: 24px
-rounded:
-  md: 8px
+radius:
+  sm: 6px
+  md: 10px
+  lg: 16px
 ---
 
-# 指点迷津设计规范（参考 Stripe）
+# 职点迷津设计规范
 
-## 1. Visual Theme & Atmosphere
+本规范与 `src/index.css` 中的令牌一一对应。改样式时先改令牌，不要在组件里写死色值、圆角和阴影；本文件与代码不一致时，以代码为准并回来更新本文件。
 
-以品牌蓝 `#4597D2` 为视觉核心，保留 Stripe 风格的清晰层级、简洁布局和充足留白。深蓝文字与浅色背景营造可信、亲和的阅读体验；渐变仅用于装饰区域，以浅蓝到品牌蓝为主。网站面向简体中文用户，排版优先保证汉字的清晰度、段落节奏和长文可读性。
+## 1. 设计定位
 
-**Key Characteristics**
+产品面向冲击央国企、校招、军队文职和公务员的中文求职者，信息来源是官方招聘公告。用户真正要的判断是两件事：这个岗位我够不够资格，以及还剩多少时间。
 
-- 品牌蓝 `#4597D2` 搭配深蓝 `#0A2540`，统一品牌识别
-- 浅蓝到品牌蓝的渐变用于装饰，避免干扰正文阅读
-- 简洁布局、充足留白、清晰的信息层级
-- 浅色背景搭配高对比度文字
-- 中文字体优先，正文使用常规字重和宽松行高
-- 主操作、链接和选中态使用同一蓝色色系
+因此界面的气质取自公文而非营销页：措辞平实、层级明确、数据可核对，不靠插画和渐变堆气氛。主色取政务公文一脉的靛蓝，次级色取石青，专门标注岗位条件与平台数据。视觉上的重量集中在岗位卡片和筛选条件上，其余部分保持安静。
 
-## 2. Color Palette & Roles
+## 2. 色彩
 
-### Primary
+### 主色 公文靛
 
-- **品牌蓝** (`#4597D2`): 品牌标识、主按钮背景、选中指示和装饰元素；小字号文字使用下方的深色交互蓝
-- **Deep Navy** (`#0A2540`): Primary text, headings, and high-contrast UI elements; conveys trust and stability
+| 令牌 | 值 | 用途 |
+|------|-----|------|
+| `--primary` | `#1B3FA0` | 主按钮底色、链接与可点文字、选中态、品牌 |
+| `--primary-hover` | `#16308A` | 主按钮悬停 |
+| `--primary-active` | `#122873` | 主按钮按下 |
+| `--primary-foreground` | `#FFFFFF` | 主色底上的文字 |
+| `--primary-wash` | `#ECEFFA` | 选中标签底色、卡片选中与悬停底色、首屏渐变起点 |
+| `--primary-wash-strong` | `#DDE3F5` | 选中项内部的图标底色等更重的浅底 |
 
-### Accent Colors
+主色对白色 9.27:1，白字放在主色上同样是 9.27:1，14px 正文和小字都可以直接用，不需要像旧版那样给主按钮配深色文字。
 
-- **交互蓝** (`#2879B3`): 浅色背景上的链接、次按钮文字及主按钮悬停背景
-- **深交互蓝** (`#206493`): 链接悬停、按下态及主按钮按下背景
-- **Steel Blue** (`#425466`): Secondary headings and supporting text; mid-tone neutrality
+### 次级色 石青
 
-### Interactive
+| 令牌 | 值 | 用途 |
+|------|-----|------|
+| `--support` | `#0E7490` | 岗位条件与平台数据的信息标记（学历、专业、地点、截止、统计图标） |
+| `--support-wash` | `#E6F2F5` | 同类信息的浅底 |
 
-- **按钮品牌蓝** (`#4597D2`): 主按钮默认背景，搭配深蓝文字 `#0A2540`
-- **链接蓝** (`#2879B3`): 默认链接及浅色背景上的交互文字；悬停和按下使用 `#206493`
-- **焦点蓝** (`#2879B3`): 键盘焦点外环；浅蓝透明光晕仅作辅助，不单独承担焦点提示
+石青只标信息，不承担任何操作。判断标准很简单：用户能点的东西用靛蓝，用户要读的条件用石青。两种颜色不要出现在同一个元素上。
 
-### Neutral Scale
+### 文字与背景
 
-- **Black** (`#000000`): Body text, labels, and primary content
-- **Slate** (`#3C4F69`): Secondary body text and descriptive copy
-- **Medium Slate** (`#425466`): Tertiary text and supporting information
-- **Light Slate** (`#64748D`): Disabled text and low-emphasis labels
-- **White** (`#FFFFFF`): Primary background, card surfaces, and text on dark backgrounds
+| 令牌 | 值 | 用途 | 对白底对比度 |
+|------|-----|------|------|
+| `--foreground` | `#101828` | 正文与标题 | 17.75 |
+| `--secondary-foreground` | `#475467` | 次级文字、说明文案 | 7.69 |
+| `--muted-foreground` | `#667085` | 时间、计数等低强调信息 | 4.97 |
+| `--background` / `--card` | `#FFFFFF` | 页面与卡片底色 | — |
+| `--secondary` | `#F5F6FA` | 分区浅底（筛选栏、页脚、图标底） | — |
+| `--muted` | `#FAFAFD` | 更浅一档的底色、禁用态底色 | — |
+| `--accent` | `#ECEFFA` | shadcn 的悬停浅底，与 `--primary-wash` 同值 | — |
+| `--accent-foreground` | `#1B3FA0` | 悬停浅底上的文字 | — |
 
-### Surface & Borders
+灰阶带一点靛蓝倾向，和主色同源，避免浅底发黄或发青。
 
-- **Off-White** (`#F8FAFD`): Subtle background tint for secondary sections
-- **Light Blue-Gray** (`#F6F9FC`): Tertiary background surfaces and subtle overlays
-- **Border Gray** (`#E5EDF5`): Card borders, dividers, and subtle separators (1px stroke)
+### 描边
 
-### Status & Semantic
+`--border` `#E1E4ED` 用于分隔线和卡片外框，只起分组作用。`--border-strong` `#CBD1DF` 用于悬停加重。`--input` `#8A94A6` 用于表单控件的可见边界，对白底 3.06:1，满足 WCAG 1.4.11 对非文字元素的要求——输入框的边框是用户识别「这里能输入」的唯一线索，必须够深；带文字的按钮由文字本身传达可点，用浅色 `--border` 即可。
 
-- **Success Green** (`#15BE53`): Success states, confirmations, and positive indicators
+### 状态色
 
-## 3. Typography Rules
+`--destructive` `#B42318`、`--success` `#067647`，都满足白底 4.5:1。状态不能只靠颜色表达，必须同时有文字或图标。
 
-### Font Family
+## 3. 字体排印
 
-全站统一使用中文无衬线字体栈：
+全站一套中文无衬线字体栈，标题、正文、按钮和表单控件共用：
 
 ```css
-font-family: "PingFang SC", "Microsoft YaHei", "Noto Sans SC", "Source Han Sans SC", sans-serif;
+font-family:
+  'PingFang SC', 'Microsoft YaHei', 'Noto Sans SC', 'Source Han Sans SC',
+  sans-serif;
 ```
 
-优先使用系统内置的苹方（macOS / iOS）和微软雅黑（Windows）；其后回退到已安装的 Noto Sans SC、思源黑体，最后由系统无衬线字体兜底。无需强制下载中文字体包。字体名称中的英文是 CSS 标识，不代表使用英文字体。
-
-正文、标题、按钮和表单控件均使用同一字体栈；控件显式继承字体。页面语言设置为 `lang="zh-CN"`。
-
-### Hierarchy
-
-以下所有角色均使用上述中文字体栈。
-
-| 角色 | 字号 | 字重 | 行高 | 字间距 | 用途 |
-|------|------|------|------|--------|------|
-| 首屏大标题 | 48px | 700 | 1.3 | normal | 首屏核心信息 |
-| 一级标题 | 32px | 700 | 1.4 | normal | 页面标题 |
-| 首屏引导文字 | 32px | 400 | 1.5 | normal | 简短介绍 |
-| 二级标题 | 26px | 600 | 1.4 | normal | 主要章节 |
-| 二级轻量标题 | 26px | 400 | 1.5 | normal | 辅助章节 |
-| 小节标题 | 18px | 600 | 1.5 | normal | 内容分组 |
-| 三级标题 | 16px | 600 | 1.5 | normal | 卡片标题 |
-| 四级标题 | 14px | 500 | 1.5 | normal | 次级标题 |
-| 常规正文 | 14px | 400 | 24px | normal | 界面说明、短段落 |
-| 长文正文 | 16px | 400 | 28px | normal | 文章、长段落 |
-| 按钮 / 标签 | 14px | 500 | 20px | normal | 按钮文字、表单标签 |
-| 大按钮 | 16px | 500 | 24px | normal | 大尺寸按钮 |
-| 列表项 | 16px | 400 | 28px | normal | 有序、无序列表 |
-| 徽标 / 辅助信息 | 12px | 500 | 18px | normal | 简短非主要信息 |
-
-### Principles
-
-- **字重**：正文使用 `400`，交互文字使用 `500`，标题使用 `600–700`；避免中文正文使用 `300` 细字重及依赖特定可变字体的 `425` 字重。
-- **字号和行高**：常规正文至少 `14px`，长文建议 `16px`；正文行高约 `1.7–1.8`，标题约 `1.3–1.5`，按钮至少 `20px` 行高。
-- **对比度**：浅色背景使用深色正文；品牌蓝底配深蓝 `#0A2540` 小字，深交互蓝底配白字。`#4597D2` 与白色对比度约 `3.18:1`，不用于白底小字或小字号白字按钮；与 `#0A2540` 对比度约 `4.89:1`。
-- **中文换行**：正文使用 `word-break: normal`、`line-break: auto`，避免 `word-break: break-all`；长 URL 等内容可使用 `overflow-wrap: anywhere`。依赖浏览器中文标点避头尾规则，不为对齐手动插入空格。
-- **阅读宽度**：桌面长文每行建议约 `30–40` 个汉字，可使用 `max-width: 40em`；移动端自然换行，不压缩字距。
-
-## 4. Component Stylings
-
-### Buttons
-
-**Primary Button**
-- Background: `#4597D2`
-- Color: `#0A2540`
-- Font Size: `14px`
-- Font Weight: `500`
-- Padding: `8px 24px`
-- Border Radius: `4px`
-- Border: `none`
-- Min Height: `40px`
-- Line Height: `20px`
-- Hover: Background `#2879B3`, Color `#FFFFFF`, shadow elevation lg
-- Active: Background `#206493`, Color `#FFFFFF`
-- Disabled: Background `#CCCCCC`, Color `#666666`, cursor `not-allowed`, opacity `0.5`
-
-**Secondary Button**
-- Background: `transparent`
-- Color: `#2879B3`
-- Font Size: `14px`
-- Font Weight: `500`
-- Padding: `8px 24px`
-- Border Radius: `4px`
-- Border: `1px solid #4597D2`
-- Min Height: `40px`
-- Line Height: `20px`
-- Hover: Background `rgba(69, 151, 210, 0.1)`, Border `1px solid #4597D2`
-- Active: Background `rgba(69, 151, 210, 0.2)`
-- Disabled: Border `1px solid #CCCCCC`, Color `#CCCCCC`
-
-**Ghost Button (Text Link)**
-- Background: `transparent`
-- Color: `#2879B3`
-- Font Size: `14px` or `16px`
-- Font Weight: `500`
-- Padding: `0px`
-- Border Radius: `0px`
-- Border: `none`
-- Height: `auto`
-- Line Height: `20px` or `24px`
-- Hover: Color `#206493`, text-decoration `underline`
-- Active: Color `#206493`
-- Disabled: Color `#CCCCCC`, cursor `not-allowed`
-
-**Icon Button**
-- Background: `rgba(0, 0, 0, 0)`
-- Color: `#0A2540`
-- Padding: `12px`
-- Border Radius: `4px`
-- Border: `none`
-- Min Height: `40px`
-- Width: `40px`
-- Hover: Background `rgba(0, 0, 0, 0.05)`
-- Active: Background `rgba(0, 0, 0, 0.1)`
-
-### Cards & Containers
-
-**Default Card**
-- Background: `#FFFFFF`
-- Color: `#425466`
-- Font Size: `14px`
-- Font Weight: `400`
-- Padding: `24px`
-- Border Radius: `8px`
-- Border: `1px solid #E5EDF5`
-- Box Shadow: `rgba(50, 50, 93, 0.25) 0px 13px 27px -5px, rgba(0, 0, 0, 0.3) 0px 8px 16px -8px` (lg elevation)
-- Line Height: `24px`
-
-**Elevated Card**
-- Background: `#FFFFFF`
-- Color: `#425466`
-- Font Size: `14px`
-- Font Weight: `400`
-- Padding: `32px`
-- Border Radius: `8px`
-- Border: `1px solid #E5EDF5`
-- Box Shadow: `rgba(50, 50, 93, 0.25) 0px 30px 60px -12px, rgba(0, 0, 0, 0.3) 0px 18px 36px -18px` (xl elevation)
-- Line Height: `24px`
-
-**Minimal Card (No Shadow)**
-- Background: `#FFFFFF`
-- Color: `#425466`
-- Font Size: `14px`
-- Font Weight: `400`
-- Padding: `20px`
-- Border Radius: `6px`
-- Border: `1px solid #E5EDF5`
-- Box Shadow: `none`
-
-**Section Container**
-- Background: `#F6F9FC`
-- Padding: `48px 32px`
-- Border Radius: `0px`
-- Border: `none`
-
-### Inputs & Forms
-
-**Input Field**
-- Background: `#FFFFFF`
-- Color: `#0A2540`
-- Font Size: `14px`
-- Font Weight: `400`
-- Padding: `7px 16px`
-- Border Radius: `4px`
-- Border: `1px solid #E5EDF5`
-- Height: `40px`
-- Line Height: `24px`
-- Box Sizing: `border-box`
-- Placeholder Color: `#64748D`
-- Focus: Border `1px solid #4597D2`, outline `2px solid #2879B3` with `2px` offset, box-shadow `0 0 0 3px rgba(69, 151, 210, 0.1)`
-- Hover: Border `1px solid #D0D8E0`
-- Disabled: Background `#F6F9FC`, Color `#64748D`, Border `1px solid #E5EDF5`, cursor `not-allowed`
-
-**Textarea**
-- Background: `#FFFFFF`
-- Color: `#0A2540`
-- Font Size: `14px`
-- Font Weight: `400`
-- Padding: `12px 16px`
-- Border Radius: `4px`
-- Border: `1px solid #E5EDF5`
-- Min Height: `120px`
-- Line Height: `24px`
-- Resize: `vertical`
-- Focus: Border `1px solid #4597D2`, outline `2px solid #2879B3` with `2px` offset, box-shadow `0 0 0 3px rgba(69, 151, 210, 0.1)`
-
-**Checkbox / Radio**
-- Size: `16px x 16px`
-- Border Radius: `4px` (checkbox), `50%` (radio)
-- Border: `1px solid #E5EDF5`
-- Background (Checked): `#2879B3`
-- Accent Color (Checked): `#FFFFFF`
-- Focus: outline `2px solid #2879B3` with `2px` offset, box-shadow `0 0 0 3px rgba(69, 151, 210, 0.1)`
-
-### Navigation
-
-**Header Navigation**
-- Background: `rgba(255, 255, 255, 0.95)` or `#FFFFFF`
-- Height: `64px`
-- Padding: `16px 32px`
-- Border: `none`
-- Border Bottom: `1px solid #E5EDF5` (optional)
-- Nav Link Color: `#425466`
-- Nav Link Font Size: `14px`
-- Nav Link Font Weight: `400`
-- Nav Link Padding: `8px 16px`
-- Nav Link Border Radius: `4px`
-- Nav Link Hover: Background `rgba(69, 151, 210, 0.1)`, Color `#2879B3`
-- Nav Link Active: Color `#2879B3`, font-weight `500`
-
-**Mobile Navigation (Hamburger Menu)**
-- Background: `#FFFFFF`
-- Z-index: `999`
-- Width: `100%` or sidebar width
-- Padding: `16px`
-- Box Shadow: `rgba(0, 0, 0, 0.1) 0px 18px 36px -18px`
-
-### Badges
-
-**Default Badge**
-- Background: `rgba(69, 151, 210, 0.1)`
-- Color: `#2879B3`
-- Font Size: `12px`
-- Font Weight: `500`
-- Padding: `4px 8px`
-- Border Radius: `2px`
-- Border: `none`
-
-**Success Badge**
-- Background: `rgba(21, 190, 83, 0.1)`
-- Color: `#15BE53`
-- Font Size: `12px`
-- Font Weight: `500`
-- Padding: `4px 8px`
-- Border Radius: `2px`
-
-### Tabs
-
-**Tab Button (Active)**
-- Background: `transparent`
-- Color: `#2879B3`
-- Font Size: `14px`
-- Font Weight: `500`
-- Padding: `12px 16px`
-- Border: `none`
-- Border Bottom: `2px solid #4597D2`
-
-**Tab Button (Inactive)**
-- Background: `transparent`
-- Color: `#64748D`
-- Font Size: `14px`
-- Font Weight: `400`
-- Padding: `12px 16px`
-- Border: `none`
-- Border Bottom: `2px solid transparent`
-- Hover: Color `#425466`, border-bottom `2px solid #E5EDF5`
-
-## 5. Layout Principles
-
-### Spacing System
-
-Base unit: `8px`
-
-Spacing scale:
-- `4px` — micro spacing (internal padding, small gaps)
-- `8px` — extra small (tight component spacing)
-- `12px` — small (button padding, form field spacing)
-- `16px` — base (standard component padding)
-- `20px` — medium (section internal spacing)
-- `24px` — large (consistent gap between related sections)
-- `32px` — extra large (section padding, major container spacing)
-- `36px` — xxl (large container gaps)
-- `40px` — xxxl (major section separation)
-- `48px` — hero (large section padding, hero spacing)
-- `72px` — massive (full-page section separation)
-
-**Usage Context:**
-- `4px–8px`: Component internals (button padding, badge padding)
-- `12px–16px`: Related elements, form groups, navigation items
-- `20px–24px`: Card content grouping, section separation
-- `32px–48px`: Major content sections, full-width padding
-- `72px+`: Full-page spacing, hero sections
-
-### Grid & Container
-
-- **Max Width**: `1400px` for main content container
-- **Column Strategy**: 12-column grid system; nested grid layout
-- **Padding**: `32px` horizontal on desktop, `16px` on tablet, `12px` on mobile
-- **Section Patterns**: Full-width hero with centered content, alternating side-by-side cards, stacked mobile
-
-### Whitespace Philosophy
-
-Generous whitespace creates breathing room and reduces cognitive load. Sections are well-separated with minimum `48px` vertical spacing. Cards and components use internal padding to create hierarchy. Larger whitespace around primary CTAs draws attention and improves click targets.
-
-### Border Radius Scale
-
-- `2px` — badges, small UI elements
-- `4px` — buttons, inputs, small cards
-- `5px` — alternate small card styling
-- `6px` — standard card containers, nav items
-- `8px` — large cards, modal containers
-- `16.5px` — large rounded buttons (pill-style)
-
-### Border Widths
-
-- **Thin** (`1px`) — card borders, input borders, dividers (primary use)
-
-## 6. Depth & Elevation
-
-| Level | Treatment | Use |
-|-------|-----------|-----|
-| None | No shadow | Flat backgrounds, text-only elements |
-| sm | `rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px` | Modals, floating panels, top-level overlays |
-| md | `rgba(0, 0, 0, 0.1) 0px 18px 36px -18px, rgba(50, 50, 93, 0.25) 0px 30px 45px -30px` | Dropdowns, tooltips, secondary floating elements |
-| lg | `rgba(50, 50, 93, 0.25) 0px 13px 27px -5px, rgba(0, 0, 0, 0.3) 0px 8px 16px -8px` | Cards, standard elevation, hover states |
-| xl | `rgba(50, 50, 93, 0.25) 0px 30px 60px -12px, rgba(0, 0, 0, 0.3) 0px 18px 36px -18px` | Elevated cards, featured sections, maximum depth |
-
-**Shadow Philosophy:** Shadows follow a layered depth model with dual-layer composition — a color shadow layer for perceived depth and a black shadow layer for contrast. Shadows increase in spread and blur as elevation rises, creating clear visual hierarchy without harshness.
-
-### Opacity Levels
-
-- `0.10` (10%) — very subtle overlays, disabled border states
-- `0.15` (15%) — hover backgrounds, light overlays
-- `0.20` (20%) — active backgrounds, medium overlays
-- `0.40` (40%) — semi-transparent text on images
-- `0.50` (50%) — modal backdrop, dividing overlays
-- `0.85` (85%) — almost opaque, reduced emphasis
-
-### Z-index / Layering
-
-- Base content: `1–3`
-- Dropdown menus: `99`
-- Sticky elements: `100`
-- Modals / Overlays: `999`
-- Toast notifications: `999999`
-
-## 7. Do's and Don'ts
-
-### Do
-
-- **主操作使用品牌蓝 `#4597D2`** — 默认搭配深蓝文字，悬停和按下使用深色蓝背景配白字
-- **Maintain high contrast** — ensure text meets WCAG AA standards (4.5:1 for body text)
-- **Apply consistent spacing** — use the 8px scale consistently to maintain rhythm
-- **Stack shadows for depth** — use dual-layer shadows for modals and elevated cards
-- **Keep borders subtle** — use `#E5EDF5` for dividers to avoid visual clutter
-- **保留充足内边距** — 按钮水平内边距至少 `16px`；纵向内边距结合中文行高和控件高度设置，避免裁切文字
-- **统一中文字重** — 正文 `400`，交互文字 `500`，标题 `600–700`
-- **Center align CTAs on mobile** — stack buttons vertically and make them full-width on small screens
-- **Use color semantically** — green for success, brand blue for primary actions, darker blue for links and secondary action text
-- **Provide clear focus states** — all interactive elements must have visible focus (ring or color change)
-
-### Don't
-
-- **Avoid low contrast combinations** — never place light gray text on light backgrounds
-- **Don't mix multiple shadow levels** — keep elevation consistent within sections
-- **Avoid harsh borders** — use light gray (`#E5EDF5`) instead of dark borders
-- **Don't disable buttons without changing appearance** — apply opacity and color change
-- **Avoid too many font sizes** — stick to defined hierarchy roles
-- **Don't use color alone to convey meaning** — always support with text or icons
-- **Avoid extremely long line lengths** — keep long-form Chinese text to approximately 30–40 Chinese characters per line on desktop
-- **Don't nest more than 2 levels of dropdowns** — use breadcrumbs or alternative navigation
-- **Avoid missing padding on touch targets** — buttons and links must be at least `40px` tall
-- **Don't place interactive elements too close together** — maintain at least `8px` spacing
-
-## 8. Responsive Behavior
-
-### Breakpoints
-
-| Breakpoint | Width | Key Changes |
-|------------|-------|-------------|
-| Mobile | 320px–639px | Single column layout, full-width buttons, condensed padding (12px), collapsed navigation |
-| Tablet | 640px–1023px | Two-column layout, standard padding (24px), drawer navigation, medium text sizes |
-| Desktop | 1024px–1399px | Multi-column layout, full navigation, optimal spacing (32px), larger typography |
-| Large Desktop | 1400px+ | Fixed max-width container (1400px), centered layout, generous whitespace |
-
-### Touch Targets
-
-- **Minimum button size**: `40px` height × `40px` width
-- **Minimum link/tap area**: `44px` × `44px` (recommended)
-- **Form inputs**: `40px` minimum height with `24px` line-height and `7px` vertical padding
-- **Navigation links**: `40px` minimum height with `16px` horizontal padding
-- **Spacing between touch targets**: Minimum `8px` gap
-
-### Collapsing Strategy
-
-- **Navigation**: Collapse horizontal nav to hamburger menu below `1024px`
-- **Buttons**: Stack vertically (full-width) below `640px`; side-by-side on larger screens
-- **Cards**: Single column on mobile, two columns on tablet, three+ columns on desktop
-- **Typography**: Reduce heading sizes by 20–30% on mobile; maintain readable body size (≥14px)
-- **Padding**: Reduce horizontal padding from `32px` (desktop) to `16px` (tablet) to `12px` (mobile)
-- **Images**: Use `max-width: 100%` with `height: auto` for responsive scaling
-
-## 9. Agent Prompt Guide
-
-### Quick Color Reference
-
-- **Primary CTA**: 品牌蓝背景 (`#4597D2`) + 深蓝文字 (`#0A2540`)；悬停 `#2879B3`、按下 `#206493`，均配白字
-- **Secondary CTA / Links**: 交互蓝文字 (`#2879B3`)；链接悬停和按下 `#206493`
-- **Body Text**: Deep Navy (`#0A2540`)
-- **Secondary Text**: Steel Blue (`#425466`)
-- **Borders / Dividers**: Border Gray (`#E5EDF5`)
-- **Background (Light)**: Off-White (`#F8FAFD`)
-- **Background (Lighter)**: Light Blue-Gray (`#F6F9FC`)
-- **Success State**: Success Green (`#15BE53`)
-- **Card Background**: White (`#FFFFFF`)
-
-### Iteration Guide
-
-1. **全站使用第 3 节中文字体栈**，控件继承字体；正文 `400`、按钮 `500`、标题 `600–700`，正文行高约 `1.7–1.8`。
-
-2. **主按钮默认使用 `#4597D2` 背景、`#0A2540` 文字**；悬停背景 `#2879B3`、按下背景 `#206493`，两者均切换为白字。字号 `14px`、字重 `500`、行高 `20px`。
-
-3. **Cards require `1px solid #E5EDF5` border** plus shadow elevation (lg: `rgba(50, 50, 93, 0.25) 0px 13px 27px -5px, rgba(0, 0, 0, 0.3) 0px 8px 16px -8px`).
-
-4. **All text must maintain WCAG AA contrast** — minimum `4.5:1` for body, `3:1` for large text; test combinations like `#0A2540` text on `#FFFFFF` background.
-
-5. **Spacing uses 8px base unit** — use multiples of 8 (`8px`, `16px`, `24px`, `32px`, etc.) for padding, margins, and gaps.
-
-6. **Form inputs have `40px` height minimum** with `24px` line-height, `7px` vertical padding, `16px` horizontal padding, `border-box` sizing, `4px` border-radius, and focus state with `2px solid #2879B3` outline, `2px` offset, and optional `3px rgba(69, 151, 210, 0.1)` halo.
-
-7. **Responsive breakpoints**: Mobile ≤639px (single column, 12px padding), Tablet 640–1023px (two columns, 24px padding), Desktop ≥1024px (multi-column, 32px padding).
-
-8. **链接默认使用 `#2879B3`**，悬停及按下使用 `#206493`；正文链接默认带下划线，导航链接可在悬停时显示下划线。
-
-9. **Opacity scale**: Use `0.1` for very subtle, `0.15` for hover, `0.2` for active, `0.5` for overlays, `0.85` for reduced emphasis.
-
-10. **Z-index layers**: Base `1–3`, dropdowns `99`, sticky `100`, modals `999`, toasts `999999` — maintain this hierarchy strictly.
+优先系统内置的苹方和微软雅黑，再回退到已安装的 Noto Sans SC 和思源黑体，最后交给系统无衬线兜底，不下载中文字体包。页面语言为 `lang="zh-CN"`。
+
+### 层级
+
+| 角色 | 字号 | 字重 | 行高 |
+|------|------|------|------|
+| 首屏标题 | clamp(28px, 3.4vw, 40px) | 600 | 1.4 |
+| 章节标题 h2 | 26px | 600 | 1.4 |
+| 面板标题 | 18px | 600 | 1.5 |
+| 卡片标题 h3 | 16px | 600 | 1.5 |
+| 强调正文 | 16px | 500 | 24–26px |
+| 常规正文 | 14px | 400 | 24px |
+| 长文正文 | 16px | 400 | 28px |
+| 按钮与表单标签 | 14px | 500 | 20px |
+| 辅助信息、时间、计数 | 12px | 400–500 | 18–20px |
+
+### 规则
+
+- 字重只用 400 / 500 / 600。正文 400，可点文字和标签 500，标题 600。不用 300 细字重，中文小字会发虚。
+- 数字用等宽数字：`<time>` 和带 `data-numeric` 的元素已在 base 层设了 `font-variant-numeric: tabular-nums`，日期、计数、倒计时在列表里对齐才不会跳。
+- 长文每行约 30–40 个汉字，用 `max-width: 40em` 控制。
+- 中文换行交给浏览器：`word-break: normal`、`line-break: auto`，不要用 `break-all`；长 URL 用 `overflow-wrap: anywhere`。
+- 标题整句用同一字重，靠字号和留白建立层级，不要只给其中一个词加粗或换色。
+
+## 4. 圆角、描边与高度
+
+### 圆角
+
+三档，元素越大越圆，不逆序：
+
+| 令牌 | 值 | 用途 |
+|------|-----|------|
+| `--radius-sm` | `6px` | 标签、徽标、下拉菜单项、xs/sm 尺寸按钮、搜索框内的输入行、筛选触发器 |
+| `--radius-md` | `10px` | 按钮、输入框、卡片、下拉与悬浮面板 |
+| `--radius-lg` / `--radius-xl` | `16px` | 大容器：搜索面板、模态框 |
+
+胶囊形状（`rounded-full`）只给热门城市、热门专业这类可多选的短标签，用形状本身区分「标签」和「按钮」。
+
+### 描边
+
+统一 `1px`。分隔和分组用 `--border`，表单控件边界用 `--input`，悬停加重用 `--border-strong`。不要用 2px 以上的边框做强调，改用底色。
+
+### 高度（阴影）
+
+三级，单层叠加，颜色统一取 `rgb(16 24 40)`：
+
+| 令牌 | 值 | 用途 |
+|------|-----|------|
+| `--elevation-raised` → `shadow-raised` | `0 1px 2px rgb(16 24 40 / 6%)` | 需要轻微浮起的无边框元素 |
+| `--elevation-overlay` → `shadow-overlay` | `0 8px 24px -6px rgb(16 24 40 / 12%), 0 2px 6px -2px rgb(16 24 40 / 6%)` | 搜索面板、下拉菜单、悬浮卡片 |
+| `--elevation-modal` → `shadow-modal` | `0 24px 48px -12px rgb(16 24 40 / 18%), 0 4px 10px -4px rgb(16 24 40 / 8%)` | 模态框、抽屉 |
+
+Tailwind 的 `shadow-sm` / `shadow-md` / `shadow-lg` 已分别指向这三级，第三方组件默认样式也能落到同一套高度上。
+
+规则：
+
+- 有 `1px` 边框的卡片默认不叠阴影。边框和阴影都是在划边界，两个一起用会显脏。
+- 悬停不要抬升阴影。改变边框色和底色即可——阴影变化会让整页卡片在鼠标移动时轻微跳动，这是模板感最强的效果之一。
+- 同一区域内不要混用两级高度。
+
+## 5. 布局与间距
+
+### 页面宽度
+
+页面外框 `1080px`（`--page-max`），左右留白 `24px`（`--page-gutter`，窄屏 `20px`），内容列 `1032px`。
+
+所有顶层容器用 `.page-shell` 这一个类，不要再手写 `max-w-* px-* mx-auto`：
+
+```css
+.page-shell {
+  width: 100%;
+  max-width: var(--page-max);
+  margin-inline: auto;
+  padding-inline: var(--page-gutter);
+}
+```
+
+### 间距
+
+基准 `4px`，实际主要用 8 的倍数：`4 / 8 / 12 / 16 / 20 / 24 / 32 / 40 / 48 / 56 / 64`。
+
+- `4–8px`：图标与文字、徽标内边距
+- `12–16px`：表单项之间、卡片网格间距
+- `20–24px`：卡片内边距、区块内部分组
+- `32–48px`：主要区块之间
+- `48–64px`：首屏上下留白
+
+### 常用栅格
+
+页面只有三种重复的列结构，按需直接使用，不需要 12 栅格：
+
+- 公告卡片：三等分，间距 `16px`
+- 岗位列表与条件面板：`1.7 : 1`，间距 `20px`
+- 筛选栏：五等分，窄屏降为三列，最窄两列
+
+## 6. 组件
+
+### 按钮
+
+统一 `rounded-md`、字号 `14px`、字重 `500`。焦点态为 `3px` 的 `--ring/40` 光环加一圈主色边框，由 shadcn 的 `Button` 提供，不要再额外加 `outline`。
+
+| 变体 | 默认 | 悬停 | 按下 |
+|------|------|------|------|
+| `default` | 底 `--primary`，白字 | 底 `--primary-hover` | 底 `--primary-active` |
+| `outline` | 白底，`--border` 边框 | 边框 `--border-strong`，底 `--muted` | — |
+| `secondary` | 底 `--secondary` | 底色加深 5% | — |
+| `ghost` | 透明 | 底 `--accent`，字 `--accent-foreground` | — |
+| `link` | 主色文字 | 加下划线 | — |
+
+主按钮悬停要变深，不要用降低不透明度的方式变浅——深色主色降透明度会在白底上泛白，看起来像禁用。
+
+尺寸：`default` 32px、`lg` 36px、`sm` 28px、`xs` 24px；页面上作为主要操作的按钮通过 `className` 拉到 40px 以上，保证点击区域。
+
+### 输入框
+
+`rounded-md`，边框 `--input`，高度不低于 `40px`，行高 `24px`，`box-sizing: border-box`，占位符用 `--muted-foreground`。焦点态边框转主色并叠加 `3px` `--ring/40` 光环。禁用态底色 `--muted`，透明度 `0.5`，`cursor: not-allowed`。
+
+### 卡片
+
+白底，`1px --border` 边框，`rounded-md`，内边距 `20–24px`，不带阴影。悬停时边框转 `--primary`、底色转 `--primary-wash`。选中态在悬停态基础上加 `inset 3px 0 0 var(--primary)` 的左侧色条——颜色之外还有一条形状线索，色觉障碍用户同样能分辨。
+
+### 浮层
+
+下拉菜单和悬浮卡片用 `rounded-md`、`shadow-overlay`、`ring-1 ring-border`，内部菜单项用 `rounded-sm`。菜单最大高度 `320px` 并保留 `16px` 视口避让，避免被固定导航遮住。
+
+### 标签
+
+热门城市、热门专业等多选短标签用 `rounded-full`，默认 `--secondary-foreground`，选中为 `--primary-wash` 底加 `--primary` 文字和 `500` 字重。
+
+## 7. 状态与可访问性
+
+- 正文对比度不低于 `4.5:1`，大号文字和图形边界不低于 `3:1`。本规范中的颜色组合均已按此校验。
+- 每个可交互元素都要有可见焦点态。shadcn 组件（带 `data-slot`）自带 ring，原生元素由 base 层的 `:where(a, button, [tabindex]):not([data-slot]):focus-visible` 兜底，两者不叠加。
+- 站点只有浅色主题。`index.css` 已把 `dark` 变体改写为 `&:where(.dark, .dark *)`，否则 shadcn 组件里的 `dark:` 样式会在系统深色模式下意外命中。新增组件如果带 `dark:` 类，保留即可，不会生效。
+- 点击目标不小于 `40px`，相邻目标间距不小于 `8px`。
+- `prefers-reduced-motion: reduce` 下关闭全部过渡与动画，已在 base 层统一处理。
+- 动效只用来回应用户的操作（展开、选中、打开）。不要给区块加入场动画，也不要给每张卡片加悬停位移。
+
+## 8. 响应式
+
+站点 `body` 设了 `min-width: 680px`，不适配移动端；窄于 680px 时出现横向滚动，这是预期行为。
+
+| 区间 | 断点写法 | 变化 |
+|------|----------|------|
+| 桌面 | ≥ 851px | 完整布局，留白 `24px` |
+| 窄屏 | 681–850px | `max-[850px]`：留白 `20px`，内边距和间距收紧，筛选栏降为三列 |
+| 最窄 | ≤ 640px | `max-sm`：筛选栏和方向入口降为两列 |
+
+## 9. Do / Don't
+
+**Do**
+
+- 先用令牌，没有合适的令牌就先加令牌
+- 可点的用靛蓝，要读的条件用石青
+- 卡片用边框分组，用底色表达状态
+- 日期和数字用等宽数字
+- 状态同时用颜色和文字/图标表达
+- 顶层容器一律 `.page-shell`
+
+**Don't**
+
+- 不要在组件里写死十六进制色值、圆角和阴影
+- 不要用透明度当悬停态
+- 不要边框和阴影同时用在一张卡片上
+- 不要在悬停时改变阴影或位移
+- 不要只给标题里的一个词加粗或换色
+- 不要给标签用全大写字母，中文场景下也不要用字母缩写当分类标记
+- 不要用 `01 / 02 / 03` 这类编号，除非内容本身确实是有先后的步骤
+- 不要用浅灰文字配浅色底
+
+## 10. 已知偏差
+
+首屏标题 `聚焦央国企，精准锁定好机遇` 目前后半句单独加粗，与第 3 节「标题整句用同一字重」的规则冲突。待首页文案改版时一并处理。

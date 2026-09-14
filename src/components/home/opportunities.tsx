@@ -53,14 +53,11 @@ export function Announcements() {
       <div className="grid grid-cols-3 gap-4">
         {data.announcements.map((notice) => (
           <article
-            className="flex flex-col min-w-0 p-5 border border-border rounded-lg bg-card cursor-pointer transition-[border-color,box-shadow,background-color] duration-160 hover:border-primary hover:bg-muted hover:shadow-[0_6px_18px_-6px_rgb(10_37_64/14%)] max-[850px]:p-4"
+            className="flex flex-col min-w-0 p-5 border border-border rounded-md bg-card cursor-pointer transition-[border-color,background-color] duration-160 hover:border-primary hover:bg-primary-wash max-[850px]:p-4"
             key={notice.id}
           >
             <div className="flex items-center gap-2 text-secondary-foreground font-medium">
-              <Megaphone
-                aria-hidden="true"
-                className="size-4.5 text-interaction"
-              />
+              <Megaphone aria-hidden="true" className="size-4.5 text-primary" />
               <span>{notice.company}</span>
             </div>
             <h3 className="mt-3 text-base leading-6.5 font-medium min-h-13 wrap-anywhere">
@@ -91,7 +88,7 @@ function DetailRow({
   return (
     <div className="grid grid-cols-[110px_minmax(0,1fr)] gap-3 py-4 border-b border-border text-sm leading-6 max-[850px]:grid-cols-1 max-[850px]:gap-1 max-[850px]:py-3">
       <dt className="flex gap-1.5 items-center font-medium">
-        <Icon aria-hidden="true" className="size-4.5 text-interaction" />
+        <Icon aria-hidden="true" className="size-4.5 text-support" />
         <span className="text-xs">{label}</span>
       </dt>
       <dd className="m-0 text-secondary-foreground text-right wrap-anywhere max-[850px]:text-left max-[850px]:pl-5.5">
@@ -105,13 +102,13 @@ function JobDetails({ job }: { job: Job }) {
   return (
     <aside
       id="job-details"
-      className="border border-border rounded-lg overflow-hidden flex flex-col"
+      className="border border-border rounded-md overflow-hidden flex flex-col"
       aria-label="当前岗位条件"
       aria-live="polite"
     >
       <div className="p-5 bg-secondary border-b border-border max-[850px]:p-4">
         <h3 className="flex items-center gap-2 font-semibold text-lg">
-          <Sparkles aria-hidden="true" className="size-5.5 text-interaction" />
+          <Sparkles aria-hidden="true" className="size-5.5 text-primary" />
           精准匹配
         </h3>
         <p className="text-secondary-foreground mt-2 text-xs leading-6">
@@ -164,12 +161,12 @@ export function RecommendedJobs() {
             <button
               type="button"
               key={job.id}
-              className="group relative w-full min-h-29 flex items-center gap-4 p-5 text-left border border-border rounded-lg bg-card transition-colors duration-160 hover:border-primary aria-pressed:border-primary aria-pressed:bg-[#edf6fd] aria-pressed:shadow-[inset_3px_0_0_var(--primary)] max-[850px]:p-4 max-[850px]:gap-3 max-[850px]:min-h-32.5"
+              className="group relative w-full min-h-29 flex items-center gap-4 p-5 text-left border border-border rounded-md bg-card transition-colors duration-160 hover:border-primary aria-pressed:border-primary aria-pressed:bg-primary-wash aria-pressed:shadow-[inset_3px_0_0_var(--primary)] max-[850px]:p-4 max-[850px]:gap-3 max-[850px]:min-h-32.5"
               aria-pressed={selectedJob?.id === job.id}
               aria-controls="job-details"
               onClick={() => setSelectedId(job.id)}
             >
-              <span className="flex items-center justify-center size-11 rounded-lg bg-secondary text-interaction shrink-0 group-aria-pressed:bg-[#dceefb] max-[850px]:size-9">
+              <span className="flex items-center justify-center size-11 rounded-md bg-secondary text-primary shrink-0 group-aria-pressed:bg-primary-wash-strong max-[850px]:size-9">
                 <Building2
                   aria-hidden="true"
                   className="size-6.25 stroke-[1.65]"
@@ -194,7 +191,7 @@ export function RecommendedJobs() {
                 </span>
               </span>
               {selectedJob?.id === job.id ? (
-                <span className="absolute right-3.5 top-3.5 flex text-interaction">
+                <span className="absolute right-3.5 top-3.5 flex text-primary">
                   <Check aria-hidden="true" className="size-4" />
                   <span className="sr-only">已选中</span>
                 </span>
