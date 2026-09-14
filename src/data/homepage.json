@@ -1,9 +1,4 @@
 {
-  "statistics": [
-    { "label": "可筛职位", "value": "40万+", "unit": "条" },
-    { "label": "今日新增", "value": "2000+", "unit": "条" },
-    { "label": "成功服务", "value": "50000+", "unit": "人" }
-  ],
   "announcements": [
     { "id": "notice-001", "company": "国家电网", "title": "国家电网2027届高校毕业生校园招聘", "publishedAt": "2026-09-12" },
     { "id": "notice-002", "company": "中国航天科工", "title": "心向星辰 · 中国航天科工秋季校园招聘", "publishedAt": "2026-09-11" },
