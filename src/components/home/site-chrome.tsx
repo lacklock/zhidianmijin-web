@@ -1,6 +1,7 @@
 import type { ReactNode } from 'react'
 import { Bell, UserRound, ChevronDown, MessagesSquare } from 'lucide-react'
 import { Button } from '@/components/ui/button'
+import integratedLogo from '@/assets/Integrated_logo.webp'
 import {
   HoverCard,
   HoverCardTrigger,
@@ -42,11 +43,13 @@ function HoverMenu({
 
 export function SiteHeader() {
   return (
-    <header className="sticky top-0 z-[100] min-w-170 h-18 border-b border-border bg-[rgb(255_255_255_/_96%)] backdrop-blur-[12px]">
+    <header className="sticky top-0 z-100 min-w-170 h-18 border-b border-border bg-[rgb(255_255_255_/_96%)] backdrop-blur-[12px]">
       <div className="w-full max-w-[1080px] px-6 mx-auto max-[850px]:px-5 h-full flex items-center gap-8 [&_nav]:flex [&_nav]:items-center [&_nav]:gap-1 max-[850px]:gap-4 max-[850px]:[&_nav]:gap-0">
-        <span className="whitespace-nowrap text-2xl font-bold tracking-[-.5px] max-[850px]:text-[22px]">
-          职点迷津<span className="text-primary">.</span>
-        </span>
+        <img
+          src={integratedLogo}
+          alt="职点迷津"
+          className="h-9 w-auto max-[850px]:h-8"
+        />
         <nav aria-label="主导航">
           <Button
             type="button"
@@ -114,17 +117,19 @@ export function SiteHeader() {
 export function SiteFooter() {
   return (
     <footer className="bg-secondary border-t border-border pt-9 pb-5">
-      <div className="w-full max-w-[1080px] px-6 mx-auto max-[850px]:px-5">
-        <div className="grid grid-cols-[2fr_1fr_1fr_1fr] gap-8 [&>div>span]:text-[22px] [&_p]:mt-2 [&_p]:text-xs [&_p]:text-secondary-foreground max-[850px]:gap-5 max-[850px]:grid-cols-[1.8fr_.8fr_1fr_1fr]">
+      <div className="w-full max-w-270 px-6 mx-auto max-[850px]:px-5">
+        <div className="grid grid-cols-[2fr_1fr_1fr_1fr] gap-8 [&_p]:mt-2 [&_p]:text-xs [&_p]:text-secondary-foreground max-[850px]:gap-5 max-[850px]:grid-cols-[1.8fr_.8fr_1fr_1fr]">
           <div>
-            <span className="whitespace-nowrap text-2xl font-bold tracking-[-.5px] max-[850px]:text-[22px]">
-              职点迷津<span className="text-primary">.</span>
-            </span>
+            <img
+              src={integratedLogo}
+              alt="职点迷津"
+              className="h-9 w-auto max-[850px]:h-8"
+            />
             <p>帮你看清岗位、把握窗口、准备下一步。</p>
           </div>
-          <div className="flex items-start gap-2 pt-1.5 text-base [&_svg]:size-6">
+          <div className="flex items-start gap-2 pt-1.5 [&_svg]:size-6">
             <MessagesSquare aria-hidden="true" />
-            <span>小程序</span>
+            <span className="text-sm">小程序</span>
           </div>
           <div className="flex flex-col items-start [&_h2]:text-sm [&_h2]:font-medium [&_h2]:mb-2 [&_button]:text-muted-foreground [&_button]:text-xs [&_button]:py-0.5 [&_button:hover]:text-interaction">
             <h2>更多服务</h2>
