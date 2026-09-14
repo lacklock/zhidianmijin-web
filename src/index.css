@@ -1,6 +1,6 @@
-@import "tailwindcss";
-@import "tw-animate-css";
-@import "shadcn/tailwind.css";
+@import 'tailwindcss';
+@import 'tw-animate-css';
+@import 'shadcn/tailwind.css';
 
 :root {
   --background: #fff;
@@ -23,7 +23,9 @@
   --destructive: #b42318;
   --radius: 8px;
   --interaction: #2879b3;
-  --body-font: "PingFang SC", "Microsoft YaHei", "Noto Sans SC", "Source Han Sans SC", sans-serif;
+  --body-font:
+    'PingFang SC', 'Microsoft YaHei', 'Noto Sans SC', 'Source Han Sans SC',
+    sans-serif;
   font-family: var(--body-font);
   color: var(--foreground);
   background: var(--background);
@@ -61,12 +63,42 @@
   --radius-xl: calc(var(--radius) + 4px);
 }
 @layer base {
-  * { border-color: var(--border); box-sizing: border-box; }
-  body { margin: 0; min-width: 680px; font-size: 14px; line-height: 24px; }
-  button, input { font: inherit; }
-  button { cursor: pointer; }
-  button:focus-visible { outline: 2px solid var(--ring); outline-offset: 3px; }
-  h1, h2, h3, p { margin: 0; }
-  svg { flex-shrink: 0; }
+  * {
+    border-color: var(--border);
+    box-sizing: border-box;
+  }
+  body {
+    margin: 0;
+    min-width: 680px;
+    font-size: 14px;
+    line-height: 24px;
+  }
+  button,
+  input {
+    font: inherit;
+  }
+  button {
+    cursor: pointer;
+  }
+  button:focus-visible {
+    outline: 2px solid var(--ring);
+    outline-offset: 3px;
+  }
+  h1,
+  h2,
+  h3,
+  p {
+    margin: 0;
+  }
+  svg {
+    flex-shrink: 0;
+  }
 }
-@media (prefers-reduced-motion: reduce) { *, *::before, *::after { transition: none !important; animation: none !important; } }
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    transition: none !important;
+    animation: none !important;
+  }
+}

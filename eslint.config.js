@@ -3,6 +3,7 @@ import globals from 'globals'
 import reactHooks from 'eslint-plugin-react-hooks'
 import reactRefresh from 'eslint-plugin-react-refresh'
 import tseslint from 'typescript-eslint'
+import eslintConfigPrettier from 'eslint-config-prettier/flat'
 import { defineConfig, globalIgnores } from 'eslint/config'
 
 export default defineConfig([
@@ -23,10 +24,14 @@ export default defineConfig([
     files: ['src/components/ui/button.tsx'],
     rules: {
       // shadcn exports its variant helper alongside Button.
-      'react-refresh/only-export-components': ['error', {
-        allowConstantExport: true,
-        allowExportNames: ['buttonVariants'],
-      }],
+      'react-refresh/only-export-components': [
+        'error',
+        {
+          allowConstantExport: true,
+          allowExportNames: ['buttonVariants'],
+        },
+      ],
     },
   },
+  eslintConfigPrettier,
 ])

@@ -8,11 +8,17 @@ const statistics = [
 
 export function PlatformStatistics() {
   return (
-    <div className="flex items-center justify-center gap-10 p-[24px_0_0] [&_>_div]:flex [&_>_div]:gap-2.5 [&_>_div]:items-center [&_>_div]:text-secondary-foreground [&_svg]:size-5 [&_svg]:text-interaction [&_strong]:text-lg [&_strong]:text-foreground [&_strong]:font-bold [&_strong]:tabular-nums max-[850px]:gap-6 max-[850px]:[&_>_div]:gap-1.5 max-[850px]:[&_>_div]:text-xs max-[850px]:[&_strong]:text-base" aria-label="平台服务数据">
+    <div
+      className="flex items-center justify-center gap-10 p-[24px_0_0] [&_>_div]:flex [&_>_div]:gap-2.5 [&_>_div]:items-center [&_>_div]:text-secondary-foreground [&_svg]:size-5 [&_svg]:text-interaction [&_strong]:text-lg [&_strong]:text-foreground [&_strong]:font-bold [&_strong]:tabular-nums max-[850px]:gap-6 max-[850px]:[&_>_div]:gap-1.5 max-[850px]:[&_>_div]:text-xs max-[850px]:[&_strong]:text-base"
+      aria-label="平台服务数据"
+    >
       {statistics.map(({ label, value, unit, icon: Icon }) => (
         <div key={label}>
           <Icon aria-hidden="true" />
-          <span>{label} <strong>{value}</strong><span className="ml-0.75">{unit}</span></span>
+          <span>
+            {label} <strong>{value}</strong>
+            <span className="ml-0.75">{unit}</span>
+          </span>
         </div>
       ))}
     </div>
