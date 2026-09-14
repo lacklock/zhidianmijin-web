@@ -1,4 +1,4 @@
-import { useRef, useState, type ReactNode } from 'react'
+import { useId, useRef, useState, type ReactNode } from 'react'
 import { cn } from 'cn'
 import {
   Building2,
@@ -187,9 +187,13 @@ function TagRow({
 
 export function SearchPanel({
   onSearch,
+  expanded,
 }: {
   onSearch?: (params: JobSearchParams) => void
+  /** 固定展开状态；不传时根据交互自动展开。 */
+  expanded?: boolean
 }) {
+  const inputId = useId()
   const [query, setQuery] = useState('')
   const [filters, setFilters] = useState<Filters>(defaultFilters)
   const [hovered, setHovered] = useState(false)
@@ -203,7 +207,8 @@ export function SearchPanel({
     return values.map((item) => ({ key, label, value: item }))
   })
   const hasFilters = selectedConditions.length > 0
-  const active = hovered || focused || openFilter !== null || hasFilters
+  const active =
+    expanded ?? (hovered || focused || openFilter !== null || hasFilters)
 
   function selectFilter(key: FilterKey, value: string) {
     setFilters((current) => {
@@ -270,7 +275,7 @@ export function SearchPanel({
             />
             <Input
               ref={inputRef}
-              id="job-search"
+              id={inputId}
               aria-label="搜索岗位或单位"
               placeholder="例如：算法工程师、国家电网..."
               value={query}
