@@ -10,6 +10,7 @@ import {
   BookOpen,
   Clock3,
   Check,
+  type LucideIcon,
 } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import data from '@/data/homepage.json'
@@ -62,7 +63,7 @@ export function Announcements() {
               />
               <span>{notice.company}</span>
             </div>
-            <h3 className="mt-3 text-base leading-[26px] font-medium min-h-13 wrap-anywhere">
+            <h3 className="mt-3 text-base leading-6.5 font-medium min-h-13 wrap-anywhere">
               {notice.title}
             </h3>
             <time
@@ -79,19 +80,19 @@ export function Announcements() {
 }
 
 function DetailRow({
-  icon,
+  icon: Icon,
   label,
   children,
 }: {
-  icon: ReactNode
+  icon: LucideIcon
   label: string
   children: ReactNode
 }) {
   return (
     <div className="grid grid-cols-[110px_minmax(0,1fr)] gap-3 py-4 border-b border-border text-sm leading-6 max-[850px]:grid-cols-1 max-[850px]:gap-1 max-[850px]:py-3">
-      <dt className="flex gap-1.5 items-start font-medium">
-        {icon}
-        {label}
+      <dt className="flex gap-1.5 items-center font-medium">
+        <Icon aria-hidden="true" className="size-4 text-interaction" />
+        <span className="text-sm">{label}</span>
       </dt>
       <dd className="m-0 text-secondary-foreground text-right wrap-anywhere max-[850px]:text-left max-[850px]:pl-5.5">
         {children}
@@ -120,28 +121,16 @@ function JobDetails({ job }: { job: Job }) {
       <div className="flex-1 p-5 max-[850px]:p-4">
         <h3 className="text-base font-medium mb-2">{job.title}</h3>
         <dl className="m-0">
-          <DetailRow
-            icon={<GraduationCap aria-hidden="true" className="mt-1 size-4" />}
-            label="学历要求"
-          >
+          <DetailRow icon={GraduationCap} label="学历要求">
             {job.degree}
           </DetailRow>
-          <DetailRow
-            icon={<BookOpen aria-hidden="true" className="mt-1 size-4" />}
-            label="专业要求"
-          >
+          <DetailRow icon={BookOpen} label="专业要求">
             {job.majors.join('、')}
           </DetailRow>
-          <DetailRow
-            icon={<MapPin aria-hidden="true" className="mt-1 size-4" />}
-            label="工作地点"
-          >
+          <DetailRow icon={MapPin} label="工作地点">
             {job.location}
           </DetailRow>
-          <DetailRow
-            icon={<Clock3 aria-hidden="true" className="mt-1 size-4" />}
-            label={job.deadlineLabel}
-          >
+          <DetailRow icon={Clock3} label={job.deadlineLabel}>
             <time dateTime={job.deadline}>
               {job.deadline.replaceAll('-', '.')}
             </time>
@@ -190,10 +179,10 @@ export function RecommendedJobs() {
                 <span className="text-base font-semibold leading-6 wrap-anywhere">
                   {job.title}
                 </span>
-                <span className="text-muted-foreground leading-[22px]">
+                <span className="text-muted-foreground leading-5.5">
                   {job.company}
                 </span>
-                <span className="flex flex-wrap gap-x-4 gap-y-1 mt-1 text-secondary-foreground text-xs leading-[20px]">
+                <span className="flex flex-wrap gap-x-4 gap-y-1 mt-1 text-secondary-foreground text-xs leading-5">
                   <span className="inline-flex gap-1 items-center">
                     <MapPin aria-hidden="true" className="size-3.5" />
                     {job.location}
