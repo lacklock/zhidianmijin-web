@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import type { ReactNode } from 'react'
+import { cn } from 'cn'
 import {
   ArrowRight,
   Megaphone,
@@ -9,7 +10,6 @@ import {
   Sparkles,
   BookOpen,
   Clock3,
-  Check,
   type LucideIcon,
 } from 'lucide-react'
 import { Button } from '@/components/ui/button'
@@ -146,8 +146,10 @@ function JobDetails({ job }: { job: Job }) {
 
 export function RecommendedJobs() {
   const [selectedId, setSelectedId] = useState(data.jobs[0]?.id)
-  const selectedJob =
-    data.jobs.find((job) => job.id === selectedId) ?? data.jobs[0]
+  const [hoveredId, setHoveredId] = useState<Job['id'] | undefined>()
+  const previewedId = hoveredId ?? selectedId
+  const previewedJob =
+    data.jobs.find((job) => job.id === previewedId) ?? data.jobs[0]
   return (
     <section aria-labelledby="jobs-heading">
       <SectionHeading
@@ -156,50 +158,72 @@ export function RecommendedJobs() {
         action="查看全部岗位"
       />
       <div className="grid grid-cols-[minmax(0,1.7fr)_minmax(0,1fr)] gap-5 items-stretch max-[850px]:grid-cols-[minmax(0,1.25fr)_minmax(0,1fr)] max-[850px]:gap-4">
-        <div className="flex flex-col gap-3" aria-label="推荐岗位">
-          {data.jobs.map((job) => (
-            <button
-              type="button"
-              key={job.id}
-              className="group relative w-full min-h-29 flex items-center gap-4 p-5 text-left border border-border rounded-md bg-card transition-colors duration-160 hover:border-primary aria-pressed:border-primary aria-pressed:bg-primary-wash aria-pressed:shadow-[inset_3px_0_0_var(--primary)] max-[850px]:p-4 max-[850px]:gap-3 max-[850px]:min-h-32.5"
-              aria-pressed={selectedJob?.id === job.id}
-              aria-controls="job-details"
-              onClick={() => setSelectedId(job.id)}
-            >
-              <span className="flex items-center justify-center size-11 rounded-md bg-secondary text-primary shrink-0 group-aria-pressed:bg-primary-wash-strong max-[850px]:size-9">
-                <Building2
-                  aria-hidden="true"
-                  className="size-6.25 stroke-[1.65]"
-                />
-              </span>
-              <span className="min-w-0 flex flex-col gap-1 pr-2.5">
-                <span className="text-base font-semibold leading-6 wrap-anywhere">
-                  {job.title}
+        <div
+          className="flex flex-col gap-3"
+          aria-label="推荐岗位"
+          onMouseLeave={() => setHoveredId(undefined)}
+          onBlur={(event) => {
+            if (!event.currentTarget.contains(event.relatedTarget)) {
+              setHoveredId(undefined)
+            }
+          }}
+        >
+          {data.jobs.map((job) => {
+            const isPreviewed = previewedJob?.id === job.id
+            return (
+              <button
+                type="button"
+                key={job.id}
+                className="group relative z-0 w-full min-h-29 flex items-center gap-4 p-5 text-left border border-border rounded-md bg-card transition-[border-color,background-color,box-shadow] duration-200 ease-out hover:z-10 hover:border-primary hover:bg-primary-wash hover:shadow-overlay aria-pressed:border-primary aria-pressed:bg-primary-wash max-[850px]:p-4 max-[850px]:gap-3 max-[850px]:min-h-32.5"
+                aria-pressed={isPreviewed}
+                aria-controls="job-details"
+                onClick={() => setSelectedId(job.id)}
+                onMouseEnter={() => setHoveredId(job.id)}
+                onFocus={() => setHoveredId(job.id)}
+              >
+                <span className="flex items-center justify-center size-11 rounded-md bg-secondary text-primary shrink-0 transition-colors duration-200 ease-out group-hover:bg-primary-wash-strong group-aria-pressed:bg-primary-wash-strong max-[850px]:size-9">
+                  <Building2
+                    aria-hidden="true"
+                    className="size-6.25 stroke-[1.65]"
+                  />
                 </span>
-                <span className="text-muted-foreground leading-5.5">
-                  {job.company}
-                </span>
-                <span className="flex flex-wrap gap-x-4 gap-y-1 mt-1 text-secondary-foreground text-xs leading-5">
-                  <span className="inline-flex gap-1 items-center">
-                    <MapPin aria-hidden="true" className="size-3.5" />
-                    {job.location}
+                <span className="min-w-0 flex-1 flex flex-col gap-1">
+                  <span className="text-base font-semibold leading-6 wrap-anywhere">
+                    {job.title}
                   </span>
-                  <span className="inline-flex gap-1 items-center">
-                    <GraduationCap aria-hidden="true" className="size-3.5" />
-                    {job.degree}
+                  <span className="text-muted-foreground leading-5.5">
+                    {job.company}
+                  </span>
+                  <span className="flex flex-wrap gap-x-4 gap-y-1 mt-1 text-secondary-foreground text-xs leading-5">
+                    <span className="inline-flex gap-1 items-center">
+                      <MapPin aria-hidden="true" className="size-3.5" />
+                      {job.location}
+                    </span>
+                    <span className="inline-flex gap-1 items-center">
+                      <GraduationCap aria-hidden="true" className="size-3.5" />
+                      {job.degree}
+                    </span>
                   </span>
                 </span>
-              </span>
-              {selectedJob?.id === job.id ? (
-                <span className="absolute right-3.5 top-3.5 flex text-primary">
-                  <Check aria-hidden="true" className="size-4" />
-                  <span className="sr-only">已选中</span>
+                <span
+                  className={cn(
+                    'flex items-center text-primary shrink-0 transition-[opacity,transform] duration-200 ease-out',
+                    isPreviewed
+                      ? 'opacity-100 translate-x-0'
+                      : 'opacity-0 translate-x-1 pointer-events-none',
+                  )}
+                  aria-hidden={!isPreviewed}
+                >
+                  <ArrowRight aria-hidden="true" className="size-4" />
+                  {isPreviewed ? (
+                    <span className="sr-only">当前查看</span>
+                  ) : null}
                 </span>
-              ) : null}
-            </button>
-          ))}
+              </button>
+            )
+          })}
         </div>
-        {selectedJob ? <JobDetails job={selectedJob} /> : null}
+        {previewedJob ? <JobDetails job={previewedJob} /> : null}
       </div>
     </section>
   )
