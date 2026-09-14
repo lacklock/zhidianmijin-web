@@ -45,8 +45,8 @@ function HoverMenu({
 
 export function SiteHeader() {
   return (
-    <header className="sticky top-0 z-100 min-w-170 h-16 border-b border-border bg-[rgb(255_255_255/96%)] backdrop-blur-[12px]">
-      <div className="w-full max-w-[1080px] px-6 mx-auto max-[850px]:px-5 h-full flex items-center gap-8 [&_nav]:flex [&_nav]:items-center [&_nav]:gap-1 max-[850px]:gap-4 max-[850px]:[&_nav]:gap-0">
+    <header className="sticky top-0 z-100 min-w-170 h-16 border-b border-border bg-[rgb(255_255_255/96%)] backdrop-blur-md">
+      <div className="w-full max-w-270 px-6 mx-auto max-[850px]:px-5 h-full flex items-center gap-8 [&_nav]:flex [&_nav]:items-center [&_nav]:gap-1 max-[850px]:gap-4 max-[850px]:[&_nav]:gap-0">
         <img
           src={siteTitleLogo}
           alt="职点迷津"
