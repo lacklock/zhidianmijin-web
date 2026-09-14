@@ -26,8 +26,13 @@ function SectionHeading({
   action: string
 }) {
   return (
-    <div className="flex items-center justify-between mb-5 gap-4 [&_h2]:text-[26px] [&_h2]:leading-[1.4] [&_h2]:font-semibold max-[850px]:[&_h2]:text-2xl">
-      <h2 id={id}>{title}</h2>
+    <div className="flex items-center justify-between mb-5 gap-4">
+      <h2
+        id={id}
+        className="text-[26px] leading-[1.4] font-semibold max-[850px]:text-2xl"
+      >
+        {title}
+      </h2>
       <Button type="button" variant="link" className="px-0">
         {action}
         <ArrowRight data-icon="inline-end" />
@@ -47,15 +52,25 @@ export function Announcements() {
       <div className="grid grid-cols-3 gap-4">
         {data.announcements.map((notice) => (
           <article
-            className="flex flex-col min-w-0 p-5 border border-border rounded-lg bg-card cursor-pointer transition-[border-color,box-shadow,background-color] duration-160 hover:border-primary hover:bg-muted hover:shadow-[0_6px_18px_-6px_rgb(10_37_64_/_14%)] [&_h3]:mt-3 [&_h3]:text-base [&_h3]:leading-[26px] [&_h3]:font-medium [&_h3]:min-h-13 [&_h3]:wrap-anywhere [&_time]:mt-5 [&_time]:text-muted-foreground [&_time]:text-xs [&_time]:tabular-nums max-[850px]:p-4"
+            className="flex flex-col min-w-0 p-5 border border-border rounded-lg bg-card cursor-pointer transition-[border-color,box-shadow,background-color] duration-160 hover:border-primary hover:bg-muted hover:shadow-[0_6px_18px_-6px_rgb(10_37_64_/_14%)] max-[850px]:p-4"
             key={notice.id}
           >
-            <div className="flex items-center gap-2 text-secondary-foreground font-medium [&_svg]:size-4.5 [&_svg]:text-interaction">
-              <Megaphone aria-hidden="true" />
+            <div className="flex items-center gap-2 text-secondary-foreground font-medium">
+              <Megaphone
+                aria-hidden="true"
+                className="size-4.5 text-interaction"
+              />
               <span>{notice.company}</span>
             </div>
-            <h3>{notice.title}</h3>
-            <time dateTime={notice.publishedAt}>{notice.publishedAt}</time>
+            <h3 className="mt-3 text-base leading-[26px] font-medium min-h-13 wrap-anywhere">
+              {notice.title}
+            </h3>
+            <time
+              className="mt-5 text-muted-foreground text-xs tabular-nums"
+              dateTime={notice.publishedAt}
+            >
+              {notice.publishedAt}
+            </time>
           </article>
         ))}
       </div>
@@ -73,12 +88,14 @@ function DetailRow({
   children: ReactNode
 }) {
   return (
-    <div className="grid grid-cols-[110px_minmax(0,1fr)] gap-3 py-4 border-b border-border text-sm leading-6 [&_dt]:flex [&_dt]:gap-1.5 [&_dt]:items-start [&_dt]:font-medium [&_dt_svg]:size-4 [&_dt_svg]:mt-1 [&_dd]:m-0 [&_dd]:text-secondary-foreground [&_dd]:text-right [&_dd]:wrap-anywhere max-[850px]:grid-cols-[1fr] max-[850px]:gap-1 max-[850px]:py-3 max-[850px]:[&_dd]:text-left max-[850px]:[&_dd]:pl-5.5">
-      <dt>
+    <div className="grid grid-cols-[110px_minmax(0,1fr)] gap-3 py-4 border-b border-border text-sm leading-6 max-[850px]:grid-cols-1 max-[850px]:gap-1 max-[850px]:py-3">
+      <dt className="flex gap-1.5 items-start font-medium">
         {icon}
         {label}
       </dt>
-      <dd>{children}</dd>
+      <dd className="m-0 text-secondary-foreground text-right wrap-anywhere max-[850px]:text-left max-[850px]:pl-5.5">
+        {children}
+      </dd>
     </div>
   )
 }
@@ -104,19 +121,25 @@ function JobDetails({ job }: { job: Job }) {
         <h3 className="text-base font-medium mb-2">{job.title}</h3>
         <dl className="m-0">
           <DetailRow
-            icon={<GraduationCap aria-hidden="true" />}
+            icon={<GraduationCap aria-hidden="true" className="mt-1 size-4" />}
             label="学历要求"
           >
             {job.degree}
           </DetailRow>
-          <DetailRow icon={<BookOpen aria-hidden="true" />} label="专业要求">
+          <DetailRow
+            icon={<BookOpen aria-hidden="true" className="mt-1 size-4" />}
+            label="专业要求"
+          >
             {job.majors.join('、')}
           </DetailRow>
-          <DetailRow icon={<MapPin aria-hidden="true" />} label="工作地点">
+          <DetailRow
+            icon={<MapPin aria-hidden="true" className="mt-1 size-4" />}
+            label="工作地点"
+          >
             {job.location}
           </DetailRow>
           <DetailRow
-            icon={<Clock3 aria-hidden="true" />}
+            icon={<Clock3 aria-hidden="true" className="mt-1 size-4" />}
             label={job.deadlineLabel}
           >
             <time dateTime={job.deadline}>
@@ -157,8 +180,11 @@ export function RecommendedJobs() {
               aria-controls="job-details"
               onClick={() => setSelectedId(job.id)}
             >
-              <span className="flex items-center justify-center size-11 rounded-lg bg-secondary text-interaction shrink-0 group-aria-pressed:bg-[#dceefb] [&_svg]:size-6.25 [&_svg]:stroke-[1.65] max-[850px]:size-9">
-                <Building2 aria-hidden="true" />
+              <span className="flex items-center justify-center size-11 rounded-lg bg-secondary text-interaction shrink-0 group-aria-pressed:bg-[#dceefb] max-[850px]:size-9">
+                <Building2
+                  aria-hidden="true"
+                  className="size-6.25 stroke-[1.65]"
+                />
               </span>
               <span className="min-w-0 flex flex-col gap-1 pr-2.5">
                 <span className="text-base font-semibold leading-6 wrap-anywhere">
@@ -167,20 +193,20 @@ export function RecommendedJobs() {
                 <span className="text-muted-foreground leading-[22px]">
                   {job.company}
                 </span>
-                <span className="flex flex-wrap gap-x-4 gap-y-1 mt-1 text-secondary-foreground text-xs leading-[20px] [&_>_span]:inline-flex [&_>_span]:gap-1 [&_>_span]:items-center [&_svg]:size-3.5">
-                  <span>
-                    <MapPin aria-hidden="true" />
+                <span className="flex flex-wrap gap-x-4 gap-y-1 mt-1 text-secondary-foreground text-xs leading-[20px]">
+                  <span className="inline-flex gap-1 items-center">
+                    <MapPin aria-hidden="true" className="size-3.5" />
                     {job.location}
                   </span>
-                  <span>
-                    <GraduationCap aria-hidden="true" />
+                  <span className="inline-flex gap-1 items-center">
+                    <GraduationCap aria-hidden="true" className="size-3.5" />
                     {job.degree}
                   </span>
                 </span>
               </span>
               {selectedJob?.id === job.id ? (
-                <span className="absolute right-3.5 top-3.5 flex text-interaction [&_svg]:size-4">
-                  <Check aria-hidden="true" />
+                <span className="absolute right-3.5 top-3.5 flex text-interaction">
+                  <Check aria-hidden="true" className="size-4" />
                   <span className="sr-only">已选中</span>
                 </span>
               ) : null}
