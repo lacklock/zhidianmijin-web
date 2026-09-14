@@ -207,6 +207,10 @@ Tailwind 的 `shadow-sm` / `shadow-md` / `shadow-lg` 已分别指向这三级，
 
 白底，`1px --border` 边框，`rounded-md`，内边距 `20–24px`，不带阴影。悬停时边框转 `--primary`、底色转 `--primary-wash`。选中态在悬停态基础上加 `inset 3px 0 0 var(--primary)` 的左侧色条——颜色之外还有一条形状线索，色觉障碍用户同样能分辨。
 
+### 搜索面板边缘光
+
+搜索面板使用 React Bits BorderGlow 的鼠标边缘跟随光效。渐变由品牌靛蓝 `--primary`、紫色 `--search-glow-violet`（`#A855F7`）和青色 `--search-glow-cyan`（`#2DD4BF`）组成，以明显的色相变化区分三色；外层光晕使用 `--search-glow-blue`（`#4775DB`），保持蓝色主调、白底、16px 圆角与原有搜索阴影。光效仅在指针靠近面板边缘时出现，离开后淡出，不播放入场动画；减少动态效果模式下关闭。此处为搜索面板专用的渐变光效例外。
+
 ### 招聘方向快捷卡片
 
 位于完整搜索面板下方，与面板间距 `32px`，仍属于同一 section。卡片是携带预设条件跳转 `/jobs` 的链接，没有选中态，也不触发搜索筛选展开。

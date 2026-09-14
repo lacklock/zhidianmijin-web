@@ -7,6 +7,7 @@ import {
 } from './recruitment-directions'
 import { PlatformStatistics } from '@/components/platform-statistics'
 import { Button } from '@/components/ui/button'
+import { BorderGlow } from '@/components/ui/border-glow'
 import { Input } from '@/components/ui/input'
 import {
   DropdownMenu,
@@ -234,7 +235,7 @@ export function SearchPanel({
   return (
     <>
       <section aria-label="岗位搜索与招聘方向">
-        <div
+        <BorderGlow
           aria-label="岗位搜索"
           data-state={active ? 'active' : 'idle'}
           onPointerEnter={(event) => {
@@ -245,7 +246,7 @@ export function SearchPanel({
           onBlurCapture={(event) => {
             setFocused(event.currentTarget.contains(event.relatedTarget))
           }}
-          className="rounded-lg border border-border bg-card shadow-search"
+          className="shadow-search"
         >
           <div className="p-6 max-[850px]:p-5">
             <form
@@ -271,7 +272,7 @@ export function SearchPanel({
                 <Button
                   type="submit"
                   size="lg"
-                  className="h-11.5 px-7 max-sm:px-3"
+                  className="h-11.5 w-32 max-sm:px-3 text-base"
                 >
                   找岗位
                 </Button>
@@ -331,7 +332,7 @@ export function SearchPanel({
           <Reveal open={active}>
             <div
               aria-label="筛选条件"
-              className="grid grid-cols-5 rounded-b-lg border-t border-border bg-secondary px-3 py-2 max-[850px]:grid-cols-3 max-[850px]:gap-y-2 max-sm:grid-cols-2"
+              className="mx-3 mb-3 grid grid-cols-5 rounded-md border border-border bg-secondary px-3 py-2 max-[850px]:grid-cols-3 max-[850px]:gap-y-2 max-sm:grid-cols-2"
             >
               {filterDefinitions.map(
                 ({ key, label, defaultLabel, options, multiple }) => {
@@ -451,7 +452,7 @@ export function SearchPanel({
               )}
             </div>
           </Reveal>
-        </div>
+        </BorderGlow>
         <RecruitmentDirections />
       </section>
       <PlatformStatistics />

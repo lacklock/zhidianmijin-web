@@ -19,6 +19,11 @@
   --primary-wash: #eceffa;
   --primary-wash-strong: #dde3f5;
 
+  /* 搜索面板边缘光：品牌靛蓝、紫色、青色渐变，外层光晕保持蓝色 */
+  --search-glow-blue: #4775db;
+  --search-glow-violet: #a855f7;
+  --search-glow-cyan: #2dd4bf;
+
   /* 次级色 石青：标注岗位条件与平台数据，不用于操作 */
   --support: #0e7490;
   --support-foreground: #fff;
