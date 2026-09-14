@@ -28,7 +28,7 @@ function DetailRow({ icon, label, children }: { icon: ReactNode; label: string; 
 function JobDetails({ job }: { job: Job }) {
   return <aside id="job-details" className="border border-border rounded-lg overflow-hidden flex flex-col" aria-label="当前岗位条件" aria-live="polite">
     <div className="p-5 bg-secondary border-b border-border [&_h3]:flex [&_h3]:items-center [&_h3]:gap-2 [&_h3]:font-semibold [&_h3]:text-lg [&_h3_svg]:size-5.5 [&_h3_svg]:text-interaction [&_p]:text-secondary-foreground [&_p]:mt-2 [&_p]:text-sm [&_p]:leading-[24px] max-[850px]:p-4"><h3><Sparkles aria-hidden="true" />精准匹配</h3><p>每个岗位均附带可追溯的匹配逻辑，拒绝盲投。</p></div>
-    <div className="p-5 flex-1 flex flex-col [&_dl]:m-0 mb-6 max-[850px]:p-4">
+    <div className="flex-1 p-5 [&_dl]:m-0 max-[850px]:p-4">
       <h3 className="text-sm font-medium mb-1">{job.title}</h3>
       <dl>
         <DetailRow icon={<GraduationCap aria-hidden="true" />} label="学历要求">{job.degree}</DetailRow>
@@ -36,7 +36,9 @@ function JobDetails({ job }: { job: Job }) {
         <DetailRow icon={<MapPin aria-hidden="true" />} label="工作地点">{job.location}</DetailRow>
         <DetailRow icon={<Clock3 aria-hidden="true" />} label={job.deadlineLabel}><time dateTime={job.deadline}>{job.deadline.replaceAll('-', '.')}</time></DetailRow>
       </dl>
-      <Button type="button" className="h-10 w-full mt-auto">查看岗位完整条件<ArrowRight data-icon="inline-end" /></Button>
+    </div>
+    <div className="px-5 pb-3 max-[850px]:px-4">
+      <Button type="button" className="h-10 w-full">查看岗位完整条件<ArrowRight data-icon="inline-end" /></Button>
     </div>
   </aside>
 }
