@@ -260,7 +260,7 @@ export function SearchPanel({
         onBlurCapture={(event) => {
           setFocused(event.currentTarget.contains(event.relatedTarget))
         }}
-        className="rounded-lg border border-border bg-white shadow-[0_12px_32px_-12px_rgb(50_80_110/18%),0_2px_8px_rgb(50_80_110/3%)]"
+        className="rounded-lg mb-4 border border-border bg-white shadow-[0_12px_32px_-12px_rgb(50_80_110/18%),0_2px_8px_rgb(50_80_110/3%)]"
       >
         <div className="p-6 max-[850px]:p-5">
           <form
