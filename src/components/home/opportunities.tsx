@@ -91,8 +91,8 @@ function DetailRow({
   return (
     <div className="grid grid-cols-[110px_minmax(0,1fr)] gap-3 py-4 border-b border-border text-sm leading-6 max-[850px]:grid-cols-1 max-[850px]:gap-1 max-[850px]:py-3">
       <dt className="flex gap-1.5 items-center font-medium">
-        <Icon aria-hidden="true" className="size-4 text-interaction" />
-        <span className="text-sm">{label}</span>
+        <Icon aria-hidden="true" className="size-4.5 text-interaction" />
+        <span className="text-xs">{label}</span>
       </dt>
       <dd className="m-0 text-secondary-foreground text-right wrap-anywhere max-[850px]:text-left max-[850px]:pl-5.5">
         {children}
