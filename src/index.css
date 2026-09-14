@@ -23,7 +23,6 @@
   --destructive: #b42318;
   --radius: 8px;
   --interaction: #2879b3;
-  --interaction-active: #206493;
   --body-font: "PingFang SC", "Microsoft YaHei", "Noto Sans SC", "Source Han Sans SC", sans-serif;
   font-family: var(--body-font);
   color: var(--foreground);
@@ -37,6 +36,7 @@
 @theme inline {
   --font-sans: var(--body-font);
   --font-heading: var(--body-font);
+  --color-interaction: var(--interaction);
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --color-card: var(--card);
@@ -55,10 +55,10 @@
   --color-input: var(--input);
   --color-ring: var(--ring);
   --color-destructive: var(--destructive);
-  --radius-sm: 4px;
-  --radius-md: 6px;
-  --radius-lg: 8px;
-  --radius-xl: 12px;
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
 }
 @layer base {
   * { border-color: var(--border); box-sizing: border-box; }
@@ -69,9 +69,4 @@
   h1, h2, h3, p { margin: 0; }
   svg { flex-shrink: 0; }
 }
-[data-slot="button"] { min-height: 40px; border-radius: 4px; font-size: 14px; font-weight: 500; gap: 8px; transition: background-color .16s, color .16s, border-color .16s; }
-[data-slot="button"][data-variant="default"]:hover { background: var(--interaction); color: white; }
-[data-slot="button"][data-variant="default"]:active { background: var(--interaction-active); color: white; }
-[data-slot="button"][data-variant="outline"] { color: var(--interaction); }
-[data-slot="button"][data-variant="link"] { color: var(--interaction); }
 @media (prefers-reduced-motion: reduce) { *, *::before, *::after { transition: none !important; animation: none !important; } }

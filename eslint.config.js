@@ -19,4 +19,14 @@ export default defineConfig([
       globals: globals.browser,
     },
   },
+  {
+    files: ['src/components/ui/button.tsx'],
+    rules: {
+      // shadcn exports its variant helper alongside Button.
+      'react-refresh/only-export-components': ['error', {
+        allowConstantExport: true,
+        allowExportNames: ['buttonVariants'],
+      }],
+    },
+  },
 ])

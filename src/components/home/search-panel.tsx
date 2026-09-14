@@ -16,18 +16,18 @@ export function SearchPanel() {
   const [query, setQuery] = useState('')
   return (
     <>
-      <section className="search-panel" aria-label="岗位搜索">
-        <div className="search-field">
+      <section className="p-6 border border-border rounded-lg bg-white shadow-[0_12px_32px_-12px_rgb(50_80_110_/_18%),_0_2px_8px_rgb(50_80_110_/_3%)] max-[850px]:p-5" aria-label="岗位搜索">
+        <div className="flex items-center gap-3 min-h-16 p-[7px_8px_7px_18px] border border-border rounded-sm bg-background [&_>_svg]:size-6 [&_>_svg]:text-interaction [&_>_svg]:stroke-[1.7] [&_[data-slot=input]]:h-11 [&_[data-slot=input]]:flex-1 [&_[data-slot=input]]:min-w-0 [&_[data-slot=input]]:border-0 [&_[data-slot=input]]:rounded-0 [&_[data-slot=input]]:shadow-none [&_[data-slot=input]]:bg-transparent [&_[data-slot=input]]:text-base [&_[data-slot=input]]:px-0 [&_[data-slot=input]:focus-visible]:outline-none [&_[data-slot=input]:focus-visible]:shadow-none focus-within:outline-2 focus-within:outline-ring focus-within:outline-offset-0.75">
           <Search aria-hidden="true" />
           <Input id="job-search" aria-label="搜索岗位或单位" placeholder="例如：算法工程师、国家电网..." value={query} onChange={(event) => setQuery(event.target.value)} />
-          <Button type="button" size="lg">找岗位</Button>
+          <Button type="button" size="lg" className="h-11.5 px-7">找岗位</Button>
         </div>
-        <div className="popular-conditions">
-          <div><span className="condition-label">热门城市</span>{['北京', '上海', '广州', '深圳', '杭州', '成都', '武汉', '南京', '西安', '重庆', '天津', '苏州', '青岛', '郑州', '长沙', '合肥'].map((city) => <button type="button" key={city}>{city}</button>)}</div>
-          <div><span className="condition-label">热门专业</span>{['计算机类', '电子信息类', '电气类', '机械类', '自动化类', '金融学类', '会计学', '法学类', '土木类', '材料类', '通信工程', '能源动力类'].map((major) => <button type="button" key={major}>{major}</button>)}</div>
+        <div className="flex flex-col gap-0 mt-3 mb-4 [&_>_div]:flex [&_>_div]:flex-wrap [&_>_div]:items-center [&_>_div]:gap-x-5 gap-y-0 [&_>_div]:min-h-9 [&_>_div_>_*]:whitespace-nowrap [&_button]:p-[4px_0] [&_button]:text-secondary-foreground [&_button:hover]:text-interaction">
+          <div><span className="text-muted-foreground text-sm">热门城市</span>{['北京', '上海', '广州', '深圳', '杭州', '成都', '武汉', '南京', '西安', '重庆', '天津', '苏州', '青岛', '郑州', '长沙', '合肥'].map((city) => <button type="button" key={city}>{city}</button>)}</div>
+          <div><span className="text-muted-foreground text-sm">热门专业</span>{['计算机类', '电子信息类', '电气类', '机械类', '自动化类', '金融学类', '会计学', '法学类', '土木类', '材料类', '通信工程', '能源动力类'].map((major) => <button type="button" key={major}>{major}</button>)}</div>
         </div>
-        <div className="direction-grid">
-          {directions.map(({ label, icon: Icon }) => <Button variant="outline" type="button" key={label}><Icon data-icon="inline-start" />{label}</Button>)}
+        <div className="grid grid-cols-5 gap-3 max-[850px]:gap-2">
+          {directions.map(({ label, icon: Icon }) => <Button variant="outline" type="button" className="h-13 px-2" key={label}><Icon data-icon="inline-start" />{label}</Button>)}
         </div>
       </section>
       <PlatformStatistics />
