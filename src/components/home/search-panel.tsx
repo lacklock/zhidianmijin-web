@@ -394,7 +394,13 @@ export function SearchPanel({
                         type="button"
                         title={`${label}：${summary}`}
                         aria-label={`${label}：${summary}`}
-                        className="relative h-auto min-h-14 w-full min-w-0 justify-between gap-3 rounded-sm px-5 py-2 text-left hover:bg-accent aria-expanded:bg-accent focus-visible:-outline-offset-2 after:absolute after:inset-y-2 after:-right-px after:w-px after:bg-border after:content-[''] last:after:hidden min-[851px]:[&:nth-child(5n)]:after:hidden min-sm:max-[850px]:[&:nth-child(3n)]:after:hidden max-sm:[&:nth-child(2n)]:after:hidden"
+                        className={cn(
+                          'relative h-auto min-h-14 w-full min-w-0 justify-between gap-3 rounded-sm px-5 py-2 text-left hover:bg-accent aria-expanded:bg-accent focus-visible:-outline-offset-2',
+                          "after:absolute after:inset-y-2 after:-right-px after:w-px after:bg-border after:content-[''] last:after:hidden",
+                          'min-[850px]:nth-[5n]:after:hidden',
+                          'sm:max-[850px]:nth-[3n]:after:hidden',
+                          'max-sm:nth-[2n]:after:hidden',
+                        )}
                       >
                         <span className="flex min-w-0 flex-1 flex-col gap-0.5">
                           <span className="text-xs font-normal text-muted-foreground">
