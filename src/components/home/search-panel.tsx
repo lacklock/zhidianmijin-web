@@ -161,8 +161,8 @@ function TagRow({
   onSelect: (value: string) => void
 }) {
   return (
-    <div className="flex min-h-9 flex-wrap items-center gap-x-5">
-      <span className="whitespace-nowrap text-xs text-muted-foreground">
+    <div className="flex min-h-9 flex-wrap items-center gap-x-0.5">
+      <span className="mr-2 whitespace-nowrap text-xs text-muted-foreground">
         {label}
       </span>
       {items.map((item) => (
@@ -172,9 +172,9 @@ function TagRow({
           aria-pressed={selected === item}
           onClick={() => onSelect(item)}
           className={cn(
-            'rounded-sm py-1 whitespace-nowrap hover:text-interaction focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring',
+            'rounded-xl px-2 py-0.5 whitespace-nowrap transition-colors duration-160 hover:text-interaction focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring',
             selected === item
-              ? 'font-medium text-interaction'
+              ? 'bg-accent font-medium text-accent-foreground'
               : 'text-secondary-foreground',
           )}
         >
