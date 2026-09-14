@@ -33,9 +33,16 @@ export function SearchPanel() {
   return (
     <>
       <section className="p-6 border border-border rounded-lg bg-white shadow-[0_12px_32px_-12px_rgb(50_80_110/18%),0_2px_8px_rgb(50_80_110/3%)] max-[850px]:p-5" aria-label="岗位搜索">
-        <div className="flex items-center gap-3 min-h-16 p-[7px_8px_7px_18px] border border-border rounded-sm bg-background [&_>_svg]:size-6 [&_>_svg]:text-interaction [&_>_svg]:stroke-[1.7] **:data-[slot=input]:h-11 **:data-[slot=input]:flex-1 **:data-[slot=input]:min-w-0 **:data-[slot=input]:border-0 **:data-[slot=input]:rounded-0 **:data-[slot=input]:shadow-none **:data-[slot=input]:bg-transparent **:data-[slot=input]:text-base **:data-[slot=input]:px-0 **:data-[slot=input]:focus-visible:outline-none **:data-[slot=input]:focus-visible:shadow-none focus-within:outline-2 focus-within:outline-ring focus-within:outline-offset-0.75">
-          <Search aria-hidden="true" />
-          <Input id="job-search" aria-label="搜索岗位或单位" placeholder="例如：算法工程师、国家电网..." value={query} onChange={(event) => setQuery(event.target.value)} />
+        <div className="flex items-center gap-3 min-h-16 p-[7px_8px_7px_18px] border border-border rounded-sm bg-background focus-within:outline-2 focus-within:outline-ring focus-within:outline-offset-0.75">
+          <Search aria-hidden="true" className="size-6 stroke-[1.7] text-interaction" />
+          <Input
+            id="job-search"
+            aria-label="搜索岗位或单位"
+            placeholder="例如：算法工程师、国家电网..."
+            value={query}
+            onChange={(event) => setQuery(event.target.value)}
+            className="h-11 flex-1 rounded-0 border-0 px-0 text-base shadow-none md:text-base focus-visible:border-0 focus-visible:ring-0"
+          />
           <Button type="button" size="lg" className="h-11.5 px-7">找岗位</Button>
         </div>
         <div className="mt-3 mb-4 flex flex-col">
