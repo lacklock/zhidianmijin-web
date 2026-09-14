@@ -260,35 +260,112 @@ export function SearchPanel({
         onBlurCapture={(event) => {
           setFocused(event.currentTarget.contains(event.relatedTarget))
         }}
-        className="rounded-lg border border-border bg-white p-6 shadow-[0_12px_32px_-12px_rgb(50_80_110/18%),0_2px_8px_rgb(50_80_110/3%)] max-[850px]:p-5"
+        className="rounded-lg border border-border bg-white shadow-[0_12px_32px_-12px_rgb(50_80_110/18%),0_2px_8px_rgb(50_80_110/3%)]"
       >
-        <form
-          onSubmit={(event) => {
-            event.preventDefault()
-            submitSearch()
-          }}
-        >
-          <div className="flex min-h-16 items-center gap-3 rounded-sm border border-border bg-background p-[7px_8px_7px_18px] focus-within:outline-2 focus-within:outline-ring focus-within:outline-offset-0.75">
-            <Search
-              aria-hidden="true"
-              className="size-6 shrink-0 stroke-[1.7] text-interaction"
+        <div className="p-6 max-[850px]:p-5">
+          <form
+            onSubmit={(event) => {
+              event.preventDefault()
+              submitSearch()
+            }}
+          >
+            <div className="flex min-h-16 items-center gap-3 rounded-sm border border-border bg-background p-[7px_8px_7px_18px] focus-within:outline-2 focus-within:outline-ring focus-within:outline-offset-0.75">
+              <Search
+                aria-hidden="true"
+                className="size-6 shrink-0 stroke-[1.7] text-interaction"
+              />
+              <Input
+                ref={inputRef}
+                id={inputId}
+                aria-label="搜索岗位或单位"
+                placeholder="例如：算法工程师、国家电网..."
+                value={query}
+                onChange={(event) => setQuery(event.target.value)}
+                className="h-11 min-w-0 flex-1 rounded-none border-0 px-0 text-base shadow-none focus-visible:border-0 focus-visible:ring-0 md:text-base"
+              />
+              <Button
+                type="submit"
+                size="lg"
+                className="h-11.5 px-7 max-sm:px-3"
+              >
+                找岗位
+              </Button>
+            </div>
+          </form>
+          <div className="mt-3 mb-4 flex flex-col">
+            <Reveal open={active}>
+              <TagRow
+                label="热门城市"
+                items={hotCities}
+                selected={filters.city}
+                onSelect={(value) => selectFilter('city', value)}
+              />
+            </Reveal>
+            <TagRow
+              label="热门专业"
+              items={hotMajors}
+              selected={filters.major}
+              onSelect={(value) => selectFilter('major', value)}
             />
-            <Input
-              ref={inputRef}
-              id={inputId}
-              aria-label="搜索岗位或单位"
-              placeholder="例如：算法工程师、国家电网..."
-              value={query}
-              onChange={(event) => setQuery(event.target.value)}
-              className="h-11 min-w-0 flex-1 rounded-none border-0 px-0 text-base shadow-none focus-visible:border-0 focus-visible:ring-0 md:text-base"
-            />
-            <Button type="submit" size="lg" className="h-11.5 px-7 max-sm:px-3">
-              找岗位
+          </div>
+          <div className="grid grid-cols-5 gap-3 max-[850px]:gap-2 max-sm:grid-cols-2">
+            {directions.map(({ label, value, icon: Icon }) => (
+              <Button
+                variant="outline"
+                type="button"
+                className="h-13 px-2"
+                key={value}
+                onClick={() => submitSearch(value)}
+              >
+                <Icon data-icon="inline-start" aria-hidden="true" />
+                {label}
+              </Button>
+            ))}
+            <Button variant="outline" type="button" className="h-13 px-2">
+              <Ellipsis data-icon="inline-start" aria-hidden="true" />
+              更多方向
             </Button>
           </div>
-        </form>
+          <Reveal open={hasFilters}>
+            <div
+              className="mt-4 flex flex-wrap items-center gap-3 border-t border-border pt-4"
+              aria-label="已选筛选条件"
+            >
+              <span className="text-xs text-muted-foreground">已选条件</span>
+              {selectedConditions.map(({ key, label, value }) => (
+                <Button
+                  key={`${key}-${value}`}
+                  type="button"
+                  variant="secondary"
+                  size="sm"
+                  aria-label={`移除${label}：${value}`}
+                  onClick={() => removeCondition(key, value)}
+                >
+                  {value}
+                  <X data-icon="inline-end" aria-hidden="true" />
+                </Button>
+              ))}
+              <Button
+                type="button"
+                variant="ghost"
+                size="sm"
+                className="ml-auto"
+                onClick={() => {
+                  inputRef.current?.focus({ preventScroll: true })
+                  setFilters(defaultFilters)
+                }}
+              >
+                <RotateCcw data-icon="inline-start" aria-hidden="true" />
+                清空筛选
+              </Button>
+            </div>
+          </Reveal>
+        </div>
         <Reveal open={active}>
-          <div className="grid grid-cols-5 gap-3 pt-4 pb-1 max-[850px]:grid-cols-3 max-sm:grid-cols-2">
+          <div
+            aria-label="筛选条件"
+            className="grid grid-cols-5 rounded-b-lg border-t border-border bg-secondary px-3 py-2 max-[850px]:grid-cols-3 max-[850px]:gap-y-2 max-sm:grid-cols-2"
+          >
             {filterDefinitions.map(
               ({ key, label, defaultLabel, options, multiple }) => {
                 const value = filters[key]
@@ -313,23 +390,38 @@ export function SearchPanel({
                   >
                     <DropdownMenuTrigger asChild>
                       <Button
-                        variant="outline"
+                        variant="ghost"
                         type="button"
                         title={`${label}：${summary}`}
                         aria-label={`${label}：${summary}`}
-                        className="h-11 w-full min-w-0 justify-between px-3"
+                        className="relative h-auto min-h-14 w-full min-w-0 justify-between gap-3 rounded-sm px-5 py-2 text-left hover:bg-accent aria-expanded:bg-accent focus-visible:-outline-offset-2 after:absolute after:inset-y-2 after:-right-px after:w-px after:bg-border after:content-[''] last:after:hidden min-[851px]:[&:nth-child(5n)]:after:hidden min-sm:max-[850px]:[&:nth-child(3n)]:after:hidden max-sm:[&:nth-child(2n)]:after:hidden"
                       >
-                        <span className="shrink-0">{label}</span>
-                        <span className="truncate">{summary}</span>
+                        <span className="flex min-w-0 flex-1 flex-col gap-0.5">
+                          <span className="text-xs font-normal text-muted-foreground">
+                            {label}
+                          </span>
+                          <span
+                            className={cn(
+                              'truncate text-base font-medium',
+                              selected.length
+                                ? 'text-interaction'
+                                : 'text-foreground',
+                            )}
+                          >
+                            {summary}
+                          </span>
+                        </span>
                         <ChevronDown
-                          data-icon="inline-end"
                           aria-hidden="true"
+                          className="mt-5 size-4 text-secondary-foreground transition-transform group-aria-expanded/button:rotate-180"
                         />
                       </Button>
                     </DropdownMenuTrigger>
                     <DropdownMenuContent
                       aria-label={label}
-                      className="min-w-44"
+                      align="start"
+                      collisionPadding={16}
+                      className="max-h-80 min-w-44"
                     >
                       <DropdownMenuGroup>
                         {multiple ? (
@@ -381,74 +473,6 @@ export function SearchPanel({
                 )
               },
             )}
-          </div>
-        </Reveal>
-        <div className="mt-3 mb-4 flex flex-col">
-          <Reveal open={active}>
-            <TagRow
-              label="热门城市"
-              items={hotCities}
-              selected={filters.city}
-              onSelect={(value) => selectFilter('city', value)}
-            />
-          </Reveal>
-          <TagRow
-            label="热门专业"
-            items={hotMajors}
-            selected={filters.major}
-            onSelect={(value) => selectFilter('major', value)}
-          />
-        </div>
-        <div className="grid grid-cols-5 gap-3 max-[850px]:gap-2 max-sm:grid-cols-2">
-          {directions.map(({ label, value, icon: Icon }) => (
-            <Button
-              variant="outline"
-              type="button"
-              className="h-13 px-2"
-              key={value}
-              onClick={() => submitSearch(value)}
-            >
-              <Icon data-icon="inline-start" aria-hidden="true" />
-              {label}
-            </Button>
-          ))}
-          <Button variant="outline" type="button" className="h-13 px-2">
-            <Ellipsis data-icon="inline-start" aria-hidden="true" />
-            更多方向
-          </Button>
-        </div>
-        <Reveal open={hasFilters}>
-          <div
-            className="mt-4 flex flex-wrap items-center gap-3 border-t border-border pt-4"
-            aria-label="已选筛选条件"
-          >
-            <span className="text-xs text-muted-foreground">已选条件</span>
-            {selectedConditions.map(({ key, label, value }) => (
-              <Button
-                key={`${key}-${value}`}
-                type="button"
-                variant="secondary"
-                size="sm"
-                aria-label={`移除${label}：${value}`}
-                onClick={() => removeCondition(key, value)}
-              >
-                {value}
-                <X data-icon="inline-end" aria-hidden="true" />
-              </Button>
-            ))}
-            <Button
-              type="button"
-              variant="ghost"
-              size="sm"
-              className="ml-auto"
-              onClick={() => {
-                inputRef.current?.focus({ preventScroll: true })
-                setFilters(defaultFilters)
-              }}
-            >
-              <RotateCcw data-icon="inline-start" aria-hidden="true" />
-              清空筛选
-            </Button>
           </div>
         </Reveal>
       </section>
