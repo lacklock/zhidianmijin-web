@@ -31,7 +31,7 @@ export default function App() {
             <SearchPanel />
           </div>
         </section>
-        <div className="w-full max-w-[1080px] px-6 mx-auto max-[850px]:px-5 flex flex-col gap-12 pt-12 pb-14">
+        <div className="w-full max-w-270 px-6 mx-auto max-[850px]:px-5 flex flex-col gap-12 pt-12 pb-14">
           <Announcements />
           <RecommendedJobs />
         </div>
