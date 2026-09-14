@@ -1,0 +1,21 @@
+{
+  "statistics": [
+    { "label": "可筛职位", "value": "40万+", "unit": "条" },
+    { "label": "今日新增", "value": "2000+", "unit": "条" },
+    { "label": "成功服务", "value": "50000+", "unit": "人" }
+  ],
+  "announcements": [
+    { "id": "notice-001", "company": "国家电网", "title": "国家电网2027届高校毕业生校园招聘", "publishedAt": "2026-09-12" },
+    { "id": "notice-002", "company": "中国航天科工", "title": "心向星辰 · 中国航天科工秋季校园招聘", "publishedAt": "2026-09-11" },
+    { "id": "notice-003", "company": "中国移动", "title": "中国移动2027届校园招聘正式启动", "publishedAt": "2026-09-10" },
+    { "id": "notice-004", "company": "中国工商银行", "title": "中国工商银行总行2027年度校园招聘", "publishedAt": "2026-09-09" },
+    { "id": "notice-005", "company": "中国中车", "title": "与时代同行 · 中国中车2027届校园招聘", "publishedAt": "2026-09-08" },
+    { "id": "notice-006", "company": "中国电子", "title": "中国电子2027届校园招聘计划发布", "publishedAt": "2026-09-07" }
+  ],
+  "jobs": [
+    { "id": "job-001", "title": "电力系统及其自动化工程师", "company": "国网北京市电力公司", "location": "北京市", "degree": "本科及以上", "majors": ["电气工程及其自动化", "电力系统及其自动化", "能源与动力工程"], "deadline": "2026-10-31", "deadlineLabel": "投递预计截止" },
+    { "id": "job-002", "title": "信号处理算法工程师", "company": "中国航天科工集团有限公司", "location": "天津市", "degree": "硕士及以上", "majors": ["信息与通信工程", "电子科学与技术", "计算机科学与技术"], "deadline": "2026-11-15", "deadlineLabel": "投递预计截止" },
+    { "id": "job-003", "title": "云平台研发工程师", "company": "中国移动通信集团广东有限公司", "location": "广东省 / 广州市", "degree": "本科及以上", "majors": ["计算机科学与技术", "软件工程", "网络工程"], "deadline": "2026-10-25", "deadlineLabel": "投递预计截止" },
+    { "id": "job-004", "title": "金融科技管理培训生", "company": "中国工商银行上海市分行", "location": "上海市", "degree": "本科及以上", "majors": ["金融学", "经济学", "统计学", "计算机科学与技术"], "deadline": "2026-10-18", "deadlineLabel": "投递预计截止" }
+  ]
+}
