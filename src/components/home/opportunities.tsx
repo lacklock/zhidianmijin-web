@@ -53,7 +53,7 @@ export function Announcements() {
       <div className="grid grid-cols-3 gap-4">
         {data.announcements.map((notice) => (
           <article
-            className="flex flex-col min-w-0 p-5 border border-border rounded-lg bg-card cursor-pointer transition-[border-color,box-shadow,background-color] duration-160 hover:border-primary hover:bg-muted hover:shadow-[0_6px_18px_-6px_rgb(10_37_64_/_14%)] max-[850px]:p-4"
+            className="flex flex-col min-w-0 p-5 border border-border rounded-lg bg-card cursor-pointer transition-[border-color,box-shadow,background-color] duration-160 hover:border-primary hover:bg-muted hover:shadow-[0_6px_18px_-6px_rgb(10_37_64/14%)] max-[850px]:p-4"
             key={notice.id}
           >
             <div className="flex items-center gap-2 text-secondary-foreground font-medium">
