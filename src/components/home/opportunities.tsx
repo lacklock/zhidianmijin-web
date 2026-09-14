@@ -109,12 +109,12 @@ function JobDetails({ job }: { job: Job }) {
       aria-label="当前岗位条件"
       aria-live="polite"
     >
-      <div className="p-5 bg-secondary border-b border-border max-[850px]:p-4">
+      <div className="px-4 py-3 bg-secondary border-b border-border max-[850px]:p-4">
         <h3 className="flex items-center gap-2 font-semibold text-lg">
-          <Sparkles aria-hidden="true" className="size-5.5 text-primary" />
+          <Sparkles aria-hidden="true" className="size-5 text-primary" />
           精准匹配
         </h3>
-        <p className="text-secondary-foreground mt-2 text-xs leading-6">
+        <p className="text-secondary-foreground mt-1 text-xs leading-6">
           每个岗位均附带可追溯的匹配逻辑，拒绝盲投。
         </p>
       </div>
