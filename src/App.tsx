@@ -1,7 +1,7 @@
 import { SiteHeader, SiteFooter } from '@/components/home/site-chrome'
 import { SearchPanel } from '@/components/home/search-panel'
 import { Announcements, RecommendedJobs } from '@/components/home/opportunities'
-import { UserSearch } from 'lucide-react'
+import SiteLogo from '@/assets/zhidian-icon.png'
 
 export default function App() {
   return (
@@ -9,18 +9,24 @@ export default function App() {
       <SiteHeader />
       <main>
         <section
-          className="bg-[radial-gradient(ellipse_at_50%_0%,_#eaf4fd_0%,_#f8fbfe_43%,_#fff_78%)]"
+          className="bg-[radial-gradient(ellipse_at_50%_0%,#eaf4fd_0%,#f8fbfe_43%,#fff_78%)]"
           aria-labelledby="hero-title"
         >
-          <div className="w-full max-w-[1080px] px-6 mx-auto max-[850px]:px-5">
-            <div className="pt-14 pb-8 text-center [&_h1]:flex [&_h1]:items-center [&_h1]:justify-center [&_h1]:gap-4 [&_h1]:text-[clamp(28px,_3.4vw,_40px)] [&_h1]:leading-[1.4] [&_h1]:font-normal [&_h1_>_svg]:size-11 [&_h1_>_svg]:text-interaction [&_h1_>_svg]:stroke-[1.6] [&_strong]:font-bold [&_p]:mt-4 [&_p]:text-secondary-foreground [&_p]:text-base max-[850px]:pt-10 max-[850px]:[&_h1]:text-[28px] max-[850px]:[&_h1]:gap-3 max-[850px]:[&_h1_>_svg]:size-9 max-[850px]:[&_p]:text-sm">
-              <h1 id="hero-title">
-                <UserSearch aria-hidden="true" />
+          <div className="w-full max-w-270 px-6 mx-auto max-[850px]:px-5">
+            <div className="pt-14 pb-8 text-center max-[850px]:pt-10">
+              <h1
+                id="hero-title"
+                className="flex items-center justify-center gap-4 text-[clamp(28px,3.4vw,40px)] leading-[1.4] font-normal max-[850px]:gap-3 max-[850px]:text-[28px]"
+              >
+                <img src={SiteLogo} alt="职点迷津" className="w-20 h-auto" />
                 <span>
-                  聚焦央国企，<strong>精准锁定好机遇</strong>
+                  聚焦央国企，
+                  <strong className="font-bold">精准锁定好机遇</strong>
                 </span>
               </h1>
-              <p>依托官方公告与海量真实数据，快速定位值得投递的优质岗位。</p>
+              <p className="mt-4 text-base text-secondary-foreground max-[850px]:text-sm">
+                依托官方公告与海量真实数据，快速定位值得投递的优质岗位。
+              </p>
             </div>
             <SearchPanel />
           </div>
