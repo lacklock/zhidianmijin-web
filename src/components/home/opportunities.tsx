@@ -13,6 +13,7 @@ import {
   type LucideIcon,
 } from 'lucide-react'
 import { Button } from '@/components/ui/button'
+import { Grainient } from '@/components/ui/grainient'
 import { RotatingText } from '@/components/ui/rotating-text'
 import data from '@/data/homepage.json'
 
@@ -109,17 +110,21 @@ function JobDetails({ job }: { job: Job }) {
       aria-label="当前岗位条件"
       aria-live="polite"
     >
-      <div className="px-4 py-3 bg-secondary border-b border-border max-[850px]:p-4">
-        <h3 className="flex items-center gap-2 font-semibold text-lg">
-          <Sparkles aria-hidden="true" className="size-5 text-primary" />
+      <div className="relative isolate overflow-hidden px-4 py-4 border-b border-border max-[850px]:p-4">
+        <Grainient aria-hidden="true" />
+        <h3 className="relative flex items-center gap-2 font-semibold text-lg text-primary-foreground">
+          <Sparkles
+            aria-hidden="true"
+            className="size-5 text-primary-foreground"
+          />
           精准匹配
         </h3>
-        <p className="text-secondary-foreground mt-1 text-xs leading-6">
+        <p className="relative mt-1 text-xs leading-6 text-primary-foreground/80">
           每个岗位均附带可追溯的匹配逻辑，拒绝盲投。
         </p>
       </div>
       <div className="flex-1 p-5 max-[850px]:p-4">
-        <h3 className="mb-2 text-base font-medium" aria-label={job.title}>
+        <h3 className="mb-2 text-lg font-medium" aria-label={job.title}>
           <RotatingText
             texts={jobTitles}
             currentIndex={Math.max(
