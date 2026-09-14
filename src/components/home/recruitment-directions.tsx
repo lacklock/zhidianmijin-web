@@ -120,7 +120,7 @@ export function RecruitmentDirections() {
         <a
           key={value}
           href={href}
-          className="group flex min-h-24 items-center gap-3 rounded-md border border-border bg-card px-5 py-6 text-base font-medium text-foreground transition-colors duration-160 hover:border-primary hover:bg-primary-wash hover:text-primary focus-visible:border-primary focus-visible:bg-primary-wash focus-visible:text-primary max-[850px]:flex-col max-[850px]:gap-2 max-[850px]:px-2 max-[850px]:py-4 max-[850px]:text-sm"
+          className="group flex h-20 items-center gap-3 rounded-md border border-border bg-card px-5 py-3 text-base font-medium text-foreground transition-colors duration-160 hover:border-primary hover:bg-primary-wash hover:text-primary focus-visible:border-primary focus-visible:bg-primary-wash focus-visible:text-primary max-[850px]:flex-col max-[850px]:justify-center max-[850px]:gap-2 max-[850px]:px-2 max-[850px]:py-2 max-[850px]:text-sm"
         >
           <span className="relative size-7 shrink-0 text-primary">
             <Icon

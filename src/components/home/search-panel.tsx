@@ -245,7 +245,7 @@ export function SearchPanel({
           onBlurCapture={(event) => {
             setFocused(event.currentTarget.contains(event.relatedTarget))
           }}
-          className="rounded-lg border border-border bg-card shadow-overlay"
+          className="rounded-lg border border-border bg-card shadow-search"
         >
           <div className="p-6 max-[850px]:p-5">
             <form
@@ -277,7 +277,7 @@ export function SearchPanel({
                 </Button>
               </div>
             </form>
-            <div className="mt-3 mb-4 flex flex-col">
+            <div className="mt-3 flex flex-col">
               <Reveal open={active}>
                 <TagRow
                   label="热门城市"

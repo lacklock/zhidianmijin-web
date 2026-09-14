@@ -54,6 +54,8 @@
   --elevation-raised: 0 1px 2px rgb(16 24 40 / 6%);
   --elevation-overlay:
     0 8px 24px -6px rgb(16 24 40 / 12%), 0 2px 6px -2px rgb(16 24 40 / 6%);
+  --elevation-search:
+    0 14px 36px -10px rgb(27 63 160 / 22%), 0 3px 10px -3px rgb(27 63 160 / 9%);
   --elevation-modal:
     0 24px 48px -12px rgb(16 24 40 / 18%), 0 4px 10px -4px rgb(16 24 40 / 8%);
 
@@ -112,6 +114,7 @@
 
   --shadow-raised: var(--elevation-raised);
   --shadow-overlay: var(--elevation-overlay);
+  --shadow-search: var(--elevation-search);
   --shadow-modal: var(--elevation-modal);
   --shadow-sm: var(--elevation-raised);
   --shadow-md: var(--elevation-overlay);

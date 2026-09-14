@@ -129,12 +129,13 @@ font-family:
 
 ### 高度（阴影）
 
-三级，单层叠加，颜色统一取 `rgb(16 24 40)`：
+通用阴影分三级，颜色取 `rgb(16 24 40)`；搜索面板使用独立的淡靛蓝阴影：
 
 | 令牌 | 值 | 用途 |
 |------|-----|------|
 | `--elevation-raised` → `shadow-raised` | `0 1px 2px rgb(16 24 40 / 6%)` | 需要轻微浮起的无边框元素 |
-| `--elevation-overlay` → `shadow-overlay` | `0 8px 24px -6px rgb(16 24 40 / 12%), 0 2px 6px -2px rgb(16 24 40 / 6%)` | 搜索面板、下拉菜单、悬浮卡片 |
+| `--elevation-overlay` → `shadow-overlay` | `0 8px 24px -6px rgb(16 24 40 / 12%), 0 2px 6px -2px rgb(16 24 40 / 6%)` | 下拉菜单、悬浮卡片 |
+| `--elevation-search` → `shadow-search` | `0 14px 36px -10px rgb(27 63 160 / 22%), 0 3px 10px -3px rgb(27 63 160 / 9%)` | 搜索面板专用 |
 | `--elevation-modal` → `shadow-modal` | `0 24px 48px -12px rgb(16 24 40 / 18%), 0 4px 10px -4px rgb(16 24 40 / 8%)` | 模态框、抽屉 |
 
 Tailwind 的 `shadow-sm` / `shadow-md` / `shadow-lg` 已分别指向这三级，第三方组件默认样式也能落到同一套高度上。
@@ -210,7 +211,7 @@ Tailwind 的 `shadow-sm` / `shadow-md` / `shadow-lg` 已分别指向这三级，
 
 位于完整搜索面板下方，与面板间距 `32px`，仍属于同一 section。卡片是携带预设条件跳转 `/jobs` 的链接，没有选中态，也不触发搜索筛选展开。
 
-只展示图标与标题，不加描述文字；五张卡片保持一排。桌面图标在标题左侧，≤850px 时图标改为位于标题上方。默认线框图标，悬停和键盘聚焦时切换实心版本，同时使用 `--primary-wash` 底色和 `--primary` 边框、文字。实心图标保留窗格等镂空细节，不增加阴影或位移。
+只展示图标与标题，不加描述文字；五张卡片保持一排，高度统一为 `80px`。桌面图标在标题左侧，≤850px 时图标改为位于标题上方并整体居中。默认线框图标，悬停和键盘聚焦时切换实心版本，同时使用 `--primary-wash` 底色和 `--primary` 边框、文字。实心图标保留窗格等镂空细节，不增加阴影或位移。
 
 ### 浮层
 
